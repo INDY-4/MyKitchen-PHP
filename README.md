@@ -94,3 +94,15 @@ order_status | string (sent / payment_waiting / in_progress / cooked / done) | O
     ]
 }
 ```
+
+## Products
+### POST products/create
+variable | datatype | desc
+--- | --- | ---
+product_kitchen_id | int | The id of the kitchen who owns the product
+product_title | string (255) | Title of the product
+product_desc ? | string (1000) | Description of the product
+product_price | float | Price of the product, number only
+product_category ? | string (100) | The category the product belongs in
+product_tags ? | string (500, csv) | The tags associated with the product, comma separated a-Z0-9
+product_image_url ? | string (255) | The url to an image for the product (unsplash)
