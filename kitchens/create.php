@@ -32,10 +32,17 @@ if (isset($response["missing"])) {
     return;
 }
 
+// Stop if user does not exist
 if (!user_exists($kitchen_owner_id)) {
     outputJSON($response + ["error" => "user does not exist"]);
     return;
 } 
+
+// Stop if user already owns a kitchen
+if (doesUserAlreadyOwnKitchen($kitchen_owner_id)) {
+    outputJSON($response + ["error" => "user already owns a kitchen"]);
+    return;
+}
 
 // Can start doing things
 $kitchen_uses_cash = toBoolean($kitchen_uses_cash);

@@ -1,6 +1,8 @@
+<a href="../"><p>Back</p></a>
+<hr>
 <form action="../kitchens/create.php" method="POST">
     <label for="kitchen_owner_id">User ID:</label>
-    <input type="text" id="kitchen_owner_id" name="kitchen_owner_id">
+    <input type="text" id="kitchen_owner_id" name="kitchen_owner_id" placeholder="4">
     <br>
     
     <label for="kitchen_name">Kitchen Name:</label>

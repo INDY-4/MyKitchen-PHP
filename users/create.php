@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 }
 
 // If variable not present, set to null
-$user_name = isset($_POST["user_name"]) ? $_POST["user_name"] : null;
+$user_name = isset($_POST["user_name"]) ? strtolower($_POST["user_name"]) : null;
 $user_pass = isset($_POST["user_pass"]) ? $_POST["user_pass"] : null;
 $user_email = isset($_POST["user_email"]) ? $_POST["user_email"] : null;
 
@@ -26,6 +26,18 @@ foreach (array('user_name', 'user_pass', 'user_email') as $variable) {
 // Stop if not all variables entered
 if (isset($response["missing"])) {
     outputJSON($response);
+    return;
+}
+
+// Stop if username is not a-z0-9 valid
+if (!preg_match('/^[a-z0-9]+$/', $user_name)) {
+    outputJSON($response + ["error" => "username is not valid for [a-z0-9]"]);
+    return;
+}
+
+// Stop if username already exists
+if (username_exists($user_name)) {
+    outputJSON($response + ["error" => "username already taken"]);
     return;
 }
 
