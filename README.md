@@ -62,7 +62,8 @@ kitchen_uses_card | string (yes/no) | Simple yes or no for if the kitchen uses c
       "closed": true
     }
   }
-}```
+}
+```
 
 ## Orders
 ### POST orders/create
@@ -76,18 +77,19 @@ order_status | string (sent / payment_waiting / in_progress / cooked / done) | O
 
 ```json
 {
-"products": [
-    {
-    "product_id": "145",
-    "product_price": 29.99
-    },
-    {
-    "product_id": "381",
-    "product_price": 19.95
-    },
-    {
-    "product_id": "93",
-    "product_price": 39.99
-    }
-]
-}```
+    "products": [
+        {
+            "product_id": "145",
+            "product_price": 29.99
+        },
+        {
+            "product_id": "381",
+            "product_price": 19.95
+        },
+        {
+            "product_id": "93",
+            "product_price": 39.99
+        }
+    ]
+}
+```
