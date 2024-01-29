@@ -1,8 +1,5 @@
 <?php
 include "./utils/functions.php";
-
-
-echo user_exists(3);
 ?>
 
 <hr>

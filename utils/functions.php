@@ -26,3 +26,7 @@ function toBoolean($input) {
     }
     return 0;
 }
+
+function outputJSON($input) {
+    echo(json_encode($input));
+}

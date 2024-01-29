@@ -2,7 +2,7 @@
 This is the php API which the frontend of MyKitchen will talk to.
 
 ## Responses
-# Status Codes
+### Status Codes
 status | meaning | extras
 --- | --- | ---
 1 | success | 
