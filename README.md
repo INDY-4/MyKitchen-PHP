@@ -27,8 +27,8 @@ kitchen_working_hours | json (100) | json object of the working hours for the ki
 kitchen_uses_cash | string (yes/no) | Simple yes or no for if the kitchen uses cash
 kitchen_uses_card | string (yes/no) | Simple yes or no for if the kitchen uses card
 
+`kitchen_working_hours` json
 ```json
-// kitchen_working_hours
 {
   "activeHours": {
     "Monday": {
@@ -75,6 +75,7 @@ order_products | json (1000) | json object of the products in the kitchen with p
 order_total | float | Decimal value for the price of the order. total >= 0
 order_status | string (sent / payment_waiting / in_progress / cooked / done) | One of the options specified which describes the order status
 
+`order_products` json
 ```json
 {
     "products": [
