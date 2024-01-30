@@ -23,6 +23,7 @@ variable | datatype | desc
 id ? | int | The id of the user you want to get information on
 username ? | int | The username of the user you want to get information on
 email ? | int | The email of the user you want to get information on
+
 Returns
 variable | desc
 user_id | the id of the user
@@ -46,6 +47,7 @@ kitchen_uses_card | string (yes/no) | Simple yes or no for if the kitchen uses c
 variable | datatype | desc
 --- | --- | ---
 kitchen_id | int | The id of the kitchen you want to get information on
+
 Returns
 variable | desc
 kitchen_id | id of the kitchen
@@ -126,6 +128,7 @@ variable | datatype | desc
 id ? | int | The id of the order you want to get information on
 kitchen ? | int | The id of the kitchen you want to get the orders of
 user ? | int | The id of the user you want to get the orders of
+
 Returns
 variable | desc
 order_id | id of the order returned
@@ -186,6 +189,7 @@ variable | datatype | desc
 --- | --- | ---
 id | int | The id of the product you want to get information on
 kitchen_id | int | The id of the kitchen you want the products of
+
 Returns
 variable | desc
 product_id | the id of the product
@@ -216,6 +220,7 @@ variable | datatype | desc
 --- | --- | ---
 owner_id | int | The id of the user/kitchen you want to get the addresses of
 address_type | string (user / kitchen) | the type of owner, is it a kitchen or a user?
+
 Returns
 variable | desc
 address_id | the id of the address
@@ -241,6 +246,7 @@ kdm_range | int (0-255) | The mile range to allow people to order. If they are f
 variable | datatype | desc
 --- | --- | ---
 kitchen_id | int | The id of the kitchen you want to get the delivery methods of
+
 Returns
 variable | desc
 kdm_id | the id of the delivery method
