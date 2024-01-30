@@ -90,6 +90,19 @@ order_products | json (1000) | json object of the products in the kitchen with p
 order_total | float | Decimal value for the price of the order. total >= 0
 order_status | string (sent / payment_waiting / in_progress / cooked / done) | One of the options specified which describes the order status
 
+### POST orders/update
+variable | datatype | desc
+--- | --- | ---
+order_id | int | The id of the order you want to update
+order_products | json (1000) | json object of the products in the kitchen with product_id and product_price
+order_total | float | Decimal value for the price of the order. total >= 0
+order_status | string (sent / payment_waiting / in_progress / cooked / done) | One of the options specified which describes the order status
+
+### POST orders/delete
+variable | datatype | desc
+--- | --- | ---
+order_id | int | The id of the order you want to delete
+
 `order_products` json
 ```json
 {

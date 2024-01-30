@@ -53,6 +53,23 @@ function kitchen_exists($kitchen_id) {
     }
 }
 
+function order_exists($order_id) {
+    // Check the database if a user exists
+    global $conn;
+    $order_id = $conn->real_escape_string($order_id);
+
+    $sql = "SELECT COUNT(*) AS order_exists FROM orders WHERE order_id = '$order_id'";
+    $result = $conn->query($sql);
+
+    if ($result) {
+        $row = $result->fetch_assoc();
+        $order_exists = $row['order_exists'];
+        return $order_exists;
+    } else {
+        return FALSE;
+    }
+}
+
 function doesKitchenAlreadyOwnMethod($kitchen_id) {
     // Check the database if a user exists
     global $conn;
