@@ -213,8 +213,8 @@ product_image_url ? | string (255) | The url to an image for the product (unspla
 ### GET products/select
 variable | datatype | desc
 --- | --- | ---
-id | int | The id of the product you want to get information on
-kitchen_id | int | The id of the kitchen you want the products of
+id ? | int | The id of the product you want to get information on
+kitchen_id ? | int | The id of the kitchen you want the products of
 
 Returns
 ```json
