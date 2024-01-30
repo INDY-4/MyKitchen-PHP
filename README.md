@@ -32,7 +32,7 @@ Returns
     {
       "user_id": "4",
       "user_name": "nick",
-      "user_pass": "bruh",
+      "user_pass": "2e315dcaa77983999bf11106c65229dc",
       "user_banner_url": null,
       "user_email": "nick@zoty.us",
       "user_created_date": "2024-01-28 17:28:04"
