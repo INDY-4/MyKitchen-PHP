@@ -37,6 +37,11 @@ kitchen_is_active | string (yes/no) | Simple yes or no for if the kitchen is tak
 kitchen_uses_cash | string (yes/no) | Simple yes or no for if the kitchen uses cash
 kitchen_uses_card | string (yes/no) | Simple yes or no for if the kitchen uses card
 
+### POST kitchens/delete
+variable | datatype | desc
+--- | --- | ---
+kitchen_id | int | The id of the kitchen you want to delete
+
 `kitchen_working_hours` json
 ```json
 {

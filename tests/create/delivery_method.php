@@ -1,6 +1,6 @@
 <a href="../../"><p>Back</p></a>
 <hr>
-<form action="../delivery_methods/create.php" method="POST">
+<form action="../../delivery_methods/create.php" method="POST">
     <label for="kdm_owner">Kitchen ID:</label>
     <input type="text" id="kdm_owner" name="kdm_owner" placeholder="3">
     <br>

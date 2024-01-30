@@ -1,6 +1,6 @@
 <a href="../../"><p>Back</p></a>
 <hr>
-<form action="../orders/create.php" method="POST">
+<form action="../../orders/create.php" method="POST">
     <label for="order_kitchen_id">Kitchen ID:</label>
     <input type="text" id="order_kitchen_id" name="order_kitchen_id" placeholder="3">
     <br>

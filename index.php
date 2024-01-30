@@ -13,4 +13,7 @@ include "./utils/functions.php";
 <a href="./tests/create/delivery_method.php"><p>Create Delivery Method</p></a>
 
 <h3>Update</h3>
-<a href="./tests/update/kitchen.php"><p>Create Kitchen</p></a>
+<a href="./tests/update/kitchen.php"><p>Update Kitchen</p></a>
+
+<h3>Delete</h3>
+<a href="./tests/delete/kitchen.php"><p>Delete Kitchen</p></a>

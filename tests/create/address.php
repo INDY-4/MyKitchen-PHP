@@ -1,6 +1,6 @@
 <a href="../../"><p>Back</p></a>
 <hr>
-<form action="../addresses/create.php" method="POST">
+<form action="../../addresses/create.php" method="POST">
     <label for="address_owner">Owner ID:</label>
     <input type="text" id="address_owner" name="address_owner" placeholder="3">
     <br>
