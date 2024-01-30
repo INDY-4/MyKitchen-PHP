@@ -33,7 +33,7 @@ Returns
       "user_id": "4",
       "user_name": "nick",
       "user_pass": "2e315dcaa77983999bf11106c65229dc",
-      "user_banner_url": null,
+      "user_banner_url": "https://images.unsplash.com/photo-1706274072971-0d4bfb4c62c7?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "user_email": "nick@zoty.us",
       "user_created_date": "2024-01-28 17:28:04"
     }
