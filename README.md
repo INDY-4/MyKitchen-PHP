@@ -1,5 +1,6 @@
 # MyKitchen-PHP
 This is the php API which the frontend of MyKitchen will talk to.
+A ? in a variable name means it is optional. In the case where all variables have ?, at least one of them is required.
 
 ## Responses
 ### Status Codes
