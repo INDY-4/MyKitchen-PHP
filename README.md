@@ -30,7 +30,7 @@ kitchen_uses_card | string (yes/no) | Simple yes or no for if the kitchen uses c
 ### POST kitchens/update
 variable | datatype | desc
 --- | --- | ---
-kitchen__id | int | The id of the kitchen you want to modify
+kitchen_id | int | The id of the kitchen you want to modify
 kitchen_name | string (100) | The title of the kitchen
 kitchen_working_hours | json (100) | json object of the working hours for the kitchen
 kitchen_is_active | string (yes/no) | Simple yes or no for if the kitchen is taking orders or deactivated
