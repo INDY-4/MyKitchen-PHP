@@ -20,7 +20,7 @@ $kitchen_is_active = isset($_POST["kitchen_is_active"]) ? $_POST["kitchen_is_act
 $kitchen_uses_cash = isset($_POST["kitchen_uses_cash"]) ? $_POST["kitchen_uses_cash"] : null;
 $kitchen_uses_card = isset($_POST["kitchen_uses_card"]) ? $_POST["kitchen_uses_card"] : null;
 
-// Loop over variables to see which are null return the missing ones
+// Loop over variables to see which are null, return the missing ones
 foreach (array('kitchen_id', 'kitchen_name', 'kitchen_working_hours', 'kitchen_is_active', 'kitchen_uses_cash', 'kitchen_uses_card') as $variable) {
     if (empty($$variable)) {
         $response["missing"][] = $variable;
@@ -33,7 +33,7 @@ if (isset($response["missing"])) {
     return;
 }
 
-// Stop if user does not exist
+// Stop if kitchen does not exist
 if (!kitchen_exists($kitchen_id)) {
     outputJSON($response + ["error" => "kitchen does not exist"]);
     return;
