@@ -108,7 +108,7 @@ function toBoolean($input) {
     // Convert "true/false" to 1/0 bit
     $lowercaseInput = strtolower($input);
 
-    if ($lowercaseInput === "true") {
+    if ($lowercaseInput === "yes") {
         return 1;
     }
     return 0;

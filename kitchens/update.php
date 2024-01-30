@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 }
 
 // If variable not present, set to null
-$kitchen_id = isset($_POST["kitchen_id"]) ? $_POST["kitchen_id"] : null;
+$kitchen_id = isset($_POST["id"]) ? $_POST["id"] : null;
 $kitchen_name = isset($_POST["kitchen_name"]) ? $_POST["kitchen_name"] : null;
 $kitchen_working_hours = isset($_POST["kitchen_working_hours"]) ? $_POST["kitchen_working_hours"] : null;
 $kitchen_is_active = isset($_POST["kitchen_is_active"]) ? $_POST["kitchen_is_active"] : null;
@@ -21,7 +21,7 @@ $kitchen_uses_cash = isset($_POST["kitchen_uses_cash"]) ? $_POST["kitchen_uses_c
 $kitchen_uses_card = isset($_POST["kitchen_uses_card"]) ? $_POST["kitchen_uses_card"] : null;
 
 // Loop over variables to see which are null, return the missing ones
-foreach (array('kitchen_id', 'kitchen_name', 'kitchen_working_hours', 'kitchen_is_active', 'kitchen_uses_cash', 'kitchen_uses_card') as $variable) {
+foreach (array('kitchen_id') as $variable) {
     if (empty($$variable)) {
         $response["missing"][] = $variable;
     }
@@ -40,22 +40,42 @@ if (!kitchen_exists($kitchen_id)) {
 } 
 
 // Can start doing things
-$kitchen_is_active = toBoolean($kitchen_is_active);
-$kitchen_uses_cash = toBoolean($kitchen_uses_cash);
-$kitchen_uses_card = toBoolean($kitchen_uses_card);
-
 // Escape all variables to prevent SQL injection
 foreach (["kitchen_id", "kitchen_name", "kitchen_working_hours", "kitchen_is_active" ,"kitchen_uses_cash", "kitchen_uses_card"] as $variable) {
     $$variable = $conn->real_escape_string($$variable);
 }
 
+// Build SET string
+$set = "";
+if (!empty($kitchen_name)) {
+    $set .= (!empty($set) ? " , " : "") . "kitchen_name = '$kitchen_name'";
+}
+if (!empty($kitchen_working_hours)) {
+    $set .= (!empty($set) ? " , " : "") . "kitchen_working_hours = '$kitchen_working_hours'";
+}
+if (!empty($kitchen_is_active)) {
+    $kitchen_is_active = toBoolean($kitchen_is_active);
+    $set .= (!empty($set) ? " , " : "") . "kitchen_is_active = '$kitchen_is_active'";
+}
+if (!empty($kitchen_uses_cash)) {
+    $kitchen_uses_cash = toBoolean($kitchen_uses_cash);
+    $set .= (!empty($set) ? " , " : "") . "kitchen_uses_cash = '$kitchen_uses_cash'";
+}
+if (!empty($kitchen_uses_card)) {
+    $kitchen_uses_card = toBoolean($kitchen_uses_card);
+    $set .= (!empty($set) ? " , " : "") . "kitchen_uses_card = '$kitchen_uses_card'";
+}
+
+// If this is still empty, nothing was updated
+if ($set == "") {
+    outputJSON($response + ["error" => "no updates provided"]);
+    return;
+}
+
+
 $sql = "UPDATE $table 
         SET 
-            kitchen_name = '$kitchen_name', 
-            kitchen_working_hours = '$kitchen_working_hours', 
-            kitchen_is_active = '$kitchen_is_active', 
-            kitchen_uses_cash = '$kitchen_uses_cash',
-            kitchen_uses_card = '$kitchen_uses_card'  
+            $set
         WHERE 
             kitchen_id = '$kitchen_id'";
 

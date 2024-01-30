@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
 
 // If variable not present, set to null
 $product_id = isset($_GET["id"]) ? $_GET["id"] : null;
-$kitchen_id = isset($_GET["kitchen"]) ? $_GET["kitchen"] : null;
+$kitchen_id = isset($_GET["kitchen_id"]) ? $_GET["kitchen_id"] : null;
 
 // Escape all variables to prevent SQL injection
 foreach (["product_id", "kitchen_id"] as $variable) {
