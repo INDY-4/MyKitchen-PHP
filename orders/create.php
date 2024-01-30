@@ -25,16 +25,16 @@ foreach (array('order_kitchen_id', 'order_user_id', 'order_products', 'order_tot
     }
 }
 
+// Stop if not all variables entered
+if (isset($response["missing"])) {
+    outputJSON($response);
+    return;
+}
+
 // Stop if order_status is not one of the preset statuses
 $order_status_options = ["sent", "payment_waiting", "in_progress", "cooked", "done"];
 if (!in_array($order_status, $order_status_options)) {
     outputJSON($response + ["error" => "order_status not in array of [sent, payment_waiting, in_progress, cooked, done]"]);
-    return;
-}
-
-// Stop if not all variables entered
-if (isset($response["missing"])) {
-    outputJSON($response);
     return;
 }
 

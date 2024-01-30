@@ -106,3 +106,16 @@ product_price | float | Price of the product, number only
 product_category ? | string (100) | The category the product belongs in
 product_tags ? | string (500, csv) | The tags associated with the product, comma separated a-Z0-9
 product_image_url ? | string (255) | The url to an image for the product (unsplash)
+
+## Addresses
+### POST addresses/create
+variable | datatype | desc
+--- | --- | ---
+address_owner | int | The id of the user or kitchen
+address_type | string (user / kitchen) | Tells if the address is for a user or kitchen
+address_line1 | string (100) | Address line 1
+address_line2 | string (100) | Address line 2
+address_city | string (50) | Address city
+address_state | string (30) | Can be 2 letter code (GA) or full state name (Georgia)
+address_zip | string (15) | Address zip code (30062)
+address_phone | string (30) | Only if user: Phone number of the user
