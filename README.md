@@ -25,6 +25,7 @@ username ? | int | The username of the user you want to get information on
 email ? | int | The email of the user you want to get information on
 
 Returns
+
 variable | desc
 user_id | the id of the user
 user_name | the username of the user, not formal
@@ -49,6 +50,7 @@ variable | datatype | desc
 kitchen_id | int | The id of the kitchen you want to get information on
 
 Returns
+
 variable | desc
 kitchen_id | id of the kitchen
 kitchen_owner | id of the user who owns the kitchen
@@ -130,6 +132,7 @@ kitchen ? | int | The id of the kitchen you want to get the orders of
 user ? | int | The id of the user you want to get the orders of
 
 Returns
+
 variable | desc
 order_id | id of the order returned
 order_kitchen_id | id of the kitchen the order belongs to
@@ -191,6 +194,7 @@ id | int | The id of the product you want to get information on
 kitchen_id | int | The id of the kitchen you want the products of
 
 Returns
+
 variable | desc
 product_id | the id of the product
 product_kitchen_id | the id of the kitchen who owns the product
@@ -222,6 +226,7 @@ owner_id | int | The id of the user/kitchen you want to get the addresses of
 address_type | string (user / kitchen) | the type of owner, is it a kitchen or a user?
 
 Returns
+
 variable | desc
 address_id | the id of the address
 address_owner | the id of the owner of the address
@@ -248,6 +253,7 @@ variable | datatype | desc
 kitchen_id | int | The id of the kitchen you want to get the delivery methods of
 
 Returns
+
 variable | desc
 kdm_id | the id of the delivery method
 kdm_owner | the id of the kitchen that owns the delivery method
