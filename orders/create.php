@@ -56,6 +56,10 @@ if ($order_total < 0) {
     return;
 }
 
+// Escape all variables to prevent SQL injection
+foreach (["order_kitchen_id", "order_user_id", "order_products", "order_total" ,"order_status"] as $variable) {
+    $$variable = $conn->real_escape_string($$variable);
+}
 
 // Can start doing things
 $sql = "INSERT INTO $table (order_kitchen_id, order_user_id, order_products, order_total, order_status) 

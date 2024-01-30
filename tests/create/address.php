@@ -1,4 +1,4 @@
-<a href="../"><p>Back</p></a>
+<a href="../../"><p>Back</p></a>
 <hr>
 <form action="../addresses/create.php" method="POST">
     <label for="address_owner">Owner ID:</label>

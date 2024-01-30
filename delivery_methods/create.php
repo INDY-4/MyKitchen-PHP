@@ -54,6 +54,11 @@ if (doesKitchenAlreadyOwnMethod($kdm_owner)) {
     return;
 }
 
+// Escape all variables to prevent SQL injection
+foreach (["kdm_owner", "kdm_type", "kdm_range"] as $variable) {
+    $$variable = $conn->real_escape_string($$variable);
+}
+
 // Can start doing things
 $sql = "INSERT INTO $table (kdm_owner, kdm_type, kdm_range) 
         VALUES ('$kdm_owner', '$kdm_type', '$kdm_range')";

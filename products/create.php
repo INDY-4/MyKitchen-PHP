@@ -47,6 +47,12 @@ if ($product_price < 0) {
 }
 
 $product_tags = preg_replace("/[^a-zA-Z0-9,]/", "", $product_tags);
+
+// Escape all variables to prevent SQL injection
+foreach (["product_kitchen_id", "product_title", "product_desc", "product_price" ,"product_category", "product_tags", "product_image_url"] as $variable) {
+    $$variable = $conn->real_escape_string($$variable);
+}
+
 // Can start doing things
 $sql = "INSERT INTO $table (product_kitchen_id, product_title, product_desc, product_price, product_category, product_tags, product_image_url) 
         VALUES ('$product_kitchen_id', '$product_title', '$product_desc', '$product_price', '$product_category', '$product_tags', '$product_image_url')";

@@ -1,4 +1,4 @@
-<a href="../"><p>Back</p></a>
+<a href="../../"><p>Back</p></a>
 <hr>
 <form action="../products/create.php" method="POST">
     <label for="product_kitchen_id">Kitchen ID:</label>

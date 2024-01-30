@@ -59,6 +59,11 @@ if ($address_type == "user") {
     } 
 }
 
+// Escape all variables to prevent SQL injection
+foreach (["address_owner", "address_type", "address_line1", "address_line2", "address_city", "address_state", "address_zip", "address_phone"] as $variable) {
+    $$variable = $conn->real_escape_string($$variable);
+}
+
 // Can start doing things
 $sql = "INSERT INTO $table (address_owner, address_type, address_line1, address_line2, address_city, address_state, address_zip, address_phone) 
         VALUES ('$address_owner', '$address_type', '$address_line1', '$address_line2', '$address_city', '$address_state', '$address_zip', '$address_phone')";

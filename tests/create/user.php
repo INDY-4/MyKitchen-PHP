@@ -1,4 +1,4 @@
-<a href="../"><p>Back</p></a>
+<a href="../../"><p>Back</p></a>
 <hr>
 <form action="../users/create.php" method="POST">
     <label for="user_name">Username:</label>
