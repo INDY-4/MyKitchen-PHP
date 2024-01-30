@@ -1,17 +1,10 @@
 <a href="../../"><p>Back</p></a>
 <hr>
-<h2>Create</h2>
-<form action="../../addresses/create.php" method="POST">
-    <label for="address_owner">Owner ID:</label>
-    <input type="text" id="address_owner" name="address_owner" placeholder="3">
+<h2>Update</h2>
+<form action="../../addresses/update.php" method="POST">
+    <label for="id">Address ID:</label>
+    <input type="text" id="id" name="id" placeholder="3">
     <br>
-    
-    <label for="address_type">Address Type:</label>
-    <select name="address_type" id="address_type">
-        <option value="kitchen">Kitchen</option>
-        <option value="user">User</option>
-    </select>
-    <br><br>
 
     <label for="address_line1">Line 1:</label>
     <input type="text" id="address_line1" name="address_line1">

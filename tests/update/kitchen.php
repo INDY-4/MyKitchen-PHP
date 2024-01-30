@@ -1,8 +1,9 @@
 <a href="../../"><p>Back</p></a>
 <hr>
+<h2>Update</h2>
 <form action="../../kitchens/update.php" method="POST">
-    <label for="kitchen_id">Kitchen ID:</label>
-    <input type="text" id="kitchen_id" name="kitchen_id" placeholder="4">
+    <label for="id">Kitchen ID:</label>
+    <input type="text" id="id" name="id" placeholder="4">
     <br>
     
     <label for="kitchen_name">Kitchen Name:</label>
@@ -15,15 +16,15 @@
     
     <label for="kitchen_is_active">Is Active?</label>
     <select name="kitchen_is_active" id="kitchen_is_active">
-        <option value="true">Yes</option>
-        <option value="false">No</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
     </select>
     <br>
 
     <label for="kitchen_uses_cash">Take Cash?</label>
     <select name="kitchen_uses_cash" id="kitchen_uses_cash">
-        <option value="true">Yes</option>
-        <option value="false">No</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
     </select>
     <br>
 

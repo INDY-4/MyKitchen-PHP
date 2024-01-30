@@ -1,9 +1,9 @@
 <a href="../../"><p>Back</p></a>
 <hr>
-<h2>Create</h2>
-<form action="../../products/create.php" method="POST">
-    <label for="product_kitchen_id">Kitchen ID:</label>
-    <input type="text" id="product_kitchen_id" name="product_kitchen_id" placeholder="3">
+<h2>Update</h2>
+<form action="../../products/update.php" method="POST">
+    <label for="id">Product ID:</label>
+    <input type="text" id="id" name="id" placeholder="3">
     <br>
     
     <label for="product_title">Product Title:</label>

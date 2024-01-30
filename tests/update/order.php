@@ -1,13 +1,9 @@
 <a href="../../"><p>Back</p></a>
 <hr>
-<h2>Create</h2>
-<form action="../../orders/create.php" method="POST">
-    <label for="order_kitchen_id">Kitchen ID:</label>
-    <input type="text" id="order_kitchen_id" name="order_kitchen_id" placeholder="3">
-    <br>
-    
-    <label for="order_user_id">User ID:</label>
-    <input type="text" id="order_user_id" name="order_user_id" placeholder="4">
+<h2>Update</h2>
+<form action="../../orders/update.php" method="POST">
+    <label for="id">Order ID:</label>
+    <input type="text" id="id" name="id" placeholder="3">
     <br>
 
     <label for="order_products">Products:</label>

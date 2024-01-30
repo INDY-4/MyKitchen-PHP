@@ -1,9 +1,9 @@
 <a href="../../"><p>Back</p></a>
 <hr>
-<h2>Create</h2>
-<form action="../../delivery_methods/create.php" method="POST">
-    <label for="kdm_owner">Kitchen ID:</label>
-    <input type="text" id="kdm_owner" name="kdm_owner" placeholder="3">
+<h2>Update</h2>
+<form action="../../delivery_methods/update.php" method="POST">
+    <label for="id">Delivery Method ID:</label>
+    <input type="text" id="id" name="id" placeholder="3">
     <br>
     
     <label for="kdm_type">Type:</label>

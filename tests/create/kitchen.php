@@ -1,5 +1,6 @@
 <a href="../../"><p>Back</p></a>
 <hr>
+<h2>Create</h2>
 <form action="../../kitchens/create.php" method="POST">
     <label for="kitchen_owner_id">User ID:</label>
     <input type="text" id="kitchen_owner_id" name="kitchen_owner_id" placeholder="4">
@@ -15,8 +16,8 @@
     
     <label for="kitchen_uses_cash">Take Cash?</label>
     <select name="kitchen_uses_cash" id="kitchen_uses_cash">
-        <option value="true">Yes</option>
-        <option value="false">No</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
     </select>
     <br>
 

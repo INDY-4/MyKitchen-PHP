@@ -41,6 +41,18 @@ Returns
 }
 ```
 
+### POST users/update
+variable | datatype | desc
+--- | --- | ---
+id | int | The id of the user you want to update
+user_pass ? | string (32, md5) | The md5'd password of a user. md5 this BEFORE sending
+user_email ? | string (255) | The email address of a user
+
+### POST users/delete
+variable | datatype | desc
+--- | --- | ---
+id | int | The id of the user you want to delete
+
 ## Kitchens
 ### POST kitchens/create
 variable | datatype | desc
@@ -116,60 +128,17 @@ Returns
 ### POST kitchens/update
 variable | datatype | desc
 --- | --- | ---
-kitchen_id | int | The id of the kitchen you want to modify
-kitchen_name | string (100) | The title of the kitchen
-kitchen_working_hours | json (100) | json object of the working hours for the kitchen
-kitchen_is_active | string (yes/no) | Simple yes or no for if the kitchen is taking orders or deactivated
-kitchen_uses_cash | string (yes/no) | Simple yes or no for if the kitchen uses cash
-kitchen_uses_card | string (yes/no) | Simple yes or no for if the kitchen uses card
+id | int | The id of the kitchen you want to modify
+kitchen_name ? | string (100) | The title of the kitchen
+kitchen_working_hours ? | json (100) | json object of the working hours for the kitchen
+kitchen_is_active ? | string (yes/no) | Simple yes or no for if the kitchen is taking orders or deactivated
+kitchen_uses_cash ? | string (yes/no) | Simple yes or no for if the kitchen uses cash
+kitchen_uses_card ? | string (yes/no) | Simple yes or no for if the kitchen uses card
 
 ### POST kitchens/delete
 variable | datatype | desc
 --- | --- | ---
-kitchen_id | int | The id of the kitchen you want to delete
-
-`kitchen_working_hours` json
-```json
-{
-  "activeHours": {
-    "monday": {
-      "start": "09:00 AM",
-      "end": "05:00 PM",
-      "closed": false
-    },
-    "tuesday": {
-      "start": "09:00 AM",
-      "end": "05:00 PM",
-      "closed": false
-    },
-    "wednesday": {
-      "start": "09:00 AM",
-      "end": "05:00 PM",
-      "closed": false
-    },
-    "thursday": {
-      "start": "09:00 AM",
-      "end": "05:00 PM",
-      "closed": false
-    },
-    "friday": {
-      "start": "09:00 AM",
-      "end": "05:00 PM",
-      "closed": false
-    },
-    "saturday": {
-      "start": null,
-      "end": null,
-      "closed": true
-    },
-    "sunday": {
-      "start": null,
-      "end": null,
-      "closed": true
-    }
-  }
-}
-```
+id | int | The id of the kitchen you want to delete
 
 ## Orders
 ### POST orders/create
@@ -218,7 +187,7 @@ Returns
 ### POST orders/update
 variable | datatype | desc
 --- | --- | ---
-order_id | int | The id of the order you want to update
+id | int | The id of the order you want to update
 order_products | json (1000) | json object of the products in the kitchen with product_id and product_price
 order_total | float | Decimal value for the price of the order. total >= 0
 order_status | string (sent / payment_waiting / in_progress / cooked / done) | One of the options specified which describes the order status
@@ -226,27 +195,7 @@ order_status | string (sent / payment_waiting / in_progress / cooked / done) | O
 ### POST orders/delete
 variable | datatype | desc
 --- | --- | ---
-order_id | int | The id of the order you want to delete
-
-`order_products` json
-```json
-{
-    "products": [
-        {
-            "product_id": "145",
-            "product_price": 29.99
-        },
-        {
-            "product_id": "381",
-            "product_price": 19.95
-        },
-        {
-            "product_id": "93",
-            "product_price": 39.99
-        }
-    ]
-}
-```
+id | int | The id of the order you want to delete
 
 ## Products
 ### POST products/create
@@ -285,6 +234,22 @@ Returns
   ]
 }
 ```
+
+### POST products/update
+variable | datatype | desc
+--- | --- | ---
+id | int | The id of the product you want to update
+product_title ? | string (255) | Title of the product
+product_desc ? | string (1000) | Description of the product
+product_price ? | float | Price of the product, number only
+product_category ? | string (100) | The category the product belongs in
+product_tags ? | string (500, csv) | The tags associated with the product, comma separated a-Z0-9
+product_image_url ? | string (255) | The url to an image for the product (unsplash)
+
+### POST products/delete
+variable | datatype | desc
+--- | --- | ---
+id | int | The id of the product you want to delete
 
 ## Addresses
 ### POST addresses/create
@@ -346,6 +311,21 @@ Returns
   ]
 }
 ```
+### POST addresses/update
+variable | datatype | desc
+--- | --- | ---
+id | int | The id of the address you want to update
+address_line1 ? | string (100) | Address line 1
+address_line2 ? | string (100) | Address line 2
+address_city ? | string (50) | Address city
+address_state ? | string (30) | Can be 2 letter code (GA) or full state name (Georgia)
+address_zip ? | string (15) | Address zip code (30062)
+address_phone ? | string (30) | Only if user: Phone number of the user
+
+### POST addresses/delete
+variable | datatype | desc
+--- | --- | ---
+id | int | The id of the address you want to delete
 
 ## Delivery Methods
 ### POST delivery_methods/create
@@ -358,7 +338,8 @@ kdm_range | int (0-255) | The mile range to allow people to order. If they are f
 ### GET delivery_methods/select
 variable | datatype | desc
 --- | --- | ---
-kitchen_id | int | The id of the kitchen you want to get the delivery methods of
+id ? | int | The id of the delivery_method you want the information of
+kitchen_id ? | int | The id of the kitchen you want to get the delivery methods of
 
 Returns
 ```json
@@ -375,3 +356,15 @@ Returns
   ]
 }
 ```
+
+### POST delivery_methods/update
+variable | datatype | desc
+--- | --- | ---
+id | int | The id of the order you want to update
+kdm_type ? | string (local_pickup / delivery) | The options for the delivery type. Local pick-up means it is not a delivery.
+kdm_range ? | int (0-255) | The mile range to allow people to order. If they are further away, then discourage them.
+
+### POST delivery_methods/delete
+variable | datatype | desc
+--- | --- | ---
+id | int | The id of the delivery method you want to delete
