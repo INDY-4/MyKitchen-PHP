@@ -25,14 +25,21 @@ username ? | int | The username of the user you want to get information on
 email ? | int | The email of the user you want to get information on
 
 Returns
-variable | desc
---- | ---
-user_id | the id of the user
-user_name | the username of the user, not formal
-user_pass | the md5 password of the user
-user_banner_url | the url to a banner image for the user
-user_email | the email of the user
-user_created_date | the date and time the user was created
+```json
+{
+  "status": 1,
+  "data": [
+    {
+      "user_id": "4",
+      "user_name": "nick",
+      "user_pass": "bruh",
+      "user_banner_url": null,
+      "user_email": "nick@zoty.us",
+      "user_created_date": "2024-01-28 17:28:04"
+    }
+  ]
+}
+```
 
 ## Kitchens
 ### POST kitchens/create
@@ -47,19 +54,64 @@ kitchen_uses_card | string (yes/no) | Simple yes or no for if the kitchen uses c
 ### GET kitchens/select
 variable | datatype | desc
 --- | --- | ---
-kitchen_id | int | The id of the kitchen you want to get information on
+id | int | The id of the kitchen you want to get information on
 
 Returns
-variable | desc
---- | ---
-kitchen_id | id of the kitchen
-kitchen_owner | id of the user who owns the kitchen
-kitchen_name | Title of the kitchen
-kitchen_working_hours | json of the available hours someone can order from the kitchen
-kitchen_is_active | boolean for whether the kitchen will be open/closed regardless of working hours
-kitchen_uses_cash | boolean for whether the kitchen takes cash or not
-kitchen_uses_card | boolean for whether the kitchen takes card or not
-kitchen_created_date | the date and time the kitchen was created
+```json
+{
+  "status": 1,
+  "data": [
+    {
+      "kitchen_id": "5",
+      "kitchen_owner": "4",
+      "kitchen_name": "Deni's Cool Kitchen",
+      "kitchen_is_active": "1",
+      "kitchen_uses_cash": "0",
+      "kitchen_uses_card": "0",
+      "kitchen_created_date": "2024-01-29 21:52:10",
+      "kitchen_working_hours": {
+        "activeHours": {
+          "monday": {
+            "start": "09:00 AM",
+            "end": "05:00 PM",
+            "closed": false
+          },
+          "tuesday": {
+            "start": "09:00 AM",
+            "end": "05:00 PM",
+            "closed": false
+          },
+          "wednesday": {
+            "start": "09:00 AM",
+            "end": "05:00 PM",
+            "closed": false
+          },
+          "thursday": {
+            "start": "09:00 AM",
+            "end": "05:00 PM",
+            "closed": false
+          },
+          "friday": {
+            "start": "09:00 AM",
+            "end": "05:00 PM",
+            "closed": false
+          },
+          "saturday": {
+            "start": null,
+            "end": null,
+            "closed": true
+          },
+          "sunday": {
+            "start": null,
+            "end": null,
+            "closed": true
+          }
+        }
+      }
+    }
+  ]
+}
+```
 
 ### POST kitchens/update
 variable | datatype | desc
@@ -80,32 +132,37 @@ kitchen_id | int | The id of the kitchen you want to delete
 ```json
 {
   "activeHours": {
-    "Monday": {
+    "monday": {
       "start": "09:00 AM",
-      "end": "05:00 PM"
+      "end": "05:00 PM",
+      "closed": false
     },
-    "Tuesday": {
+    "tuesday": {
       "start": "09:00 AM",
-      "end": "05:00 PM"
+      "end": "05:00 PM",
+      "closed": false
     },
-    "Wednesday": {
+    "wednesday": {
       "start": "09:00 AM",
-      "end": "05:00 PM"
+      "end": "05:00 PM",
+      "closed": false
     },
-    "Thursday": {
+    "thursday": {
       "start": "09:00 AM",
-      "end": "05:00 PM"
+      "end": "05:00 PM",
+      "closed": false
     },
-    "Friday": {
+    "friday": {
       "start": "09:00 AM",
-      "end": "05:00 PM"
+      "end": "05:00 PM",
+      "closed": false
     },
-    "Saturday": {
+    "saturday": {
       "start": null,
       "end": null,
       "closed": true
     },
-    "Sunday": {
+    "sunday": {
       "start": null,
       "end": null,
       "closed": true
@@ -132,15 +189,31 @@ kitchen ? | int | The id of the kitchen you want to get the orders of
 user ? | int | The id of the user you want to get the orders of
 
 Returns
-variable | desc
---- | ---
-order_id | id of the order returned
-order_kitchen_id | id of the kitchen the order belongs to
-order_user_id | id of the user the order belongs to
-order_products | json of the products in the order
-order_total | the total value of the order
-order_status | the status of the order
-order_created_date | the date and time the order was created
+```json
+{
+  "status": 1,
+  "data": [
+    {
+      "order_id": "1",
+      "order_kitchen_id": "3",
+      "order_user_id": "4",
+      "order_products": [
+        {
+          "product_id": "2",
+          "product_price": "6.9"
+        },
+        {
+          "product_id": "1",
+          "product_price": "5"
+        }
+      ],
+      "order_total": "53.6",
+      "order_status": "in_progress",
+      "order_created_date": "2024-01-29 11:26:45"
+    }
+  ]
+}
+```
 
 ### POST orders/update
 variable | datatype | desc
@@ -194,17 +267,24 @@ id | int | The id of the product you want to get information on
 kitchen_id | int | The id of the kitchen you want the products of
 
 Returns
-variable | desc
---- | ---
-product_id | the id of the product
-product_kitchen_id | the id of the kitchen who owns the product
-product_title | the title of the product
-product_desc | the description of the product
-product_price | the decimal price of the product , no $
-product_category | the category of the product
-product_tags | comma separated tags for the product
-product_image_url | a url to the image for the product
-product_created_date | the date and time the product was created
+```json
+{
+  "status": 1,
+  "data": [
+    {
+      "product_id": "2",
+      "product_kitchen_id": "3",
+      "product_title": "Pastrami Burger",
+      "product_desc": "You get a pastrami ball it up put it on da grill burger it.",
+      "product_price": "6.9",
+      "product_category": "Handhelds",
+      "product_tags": "pastrami,burger,cheese",
+      "product_image_url": "https://images.unsplash.com/photo-1697384874178-3f2afa6bed7b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "product_created_date": "2024-01-29 12:17:57"
+    }
+  ]
+}
+```
 
 ## Addresses
 ### POST addresses/create
@@ -226,18 +306,46 @@ owner_id | int | The id of the user/kitchen you want to get the addresses of
 address_type | string (user / kitchen) | the type of owner, is it a kitchen or a user?
 
 Returns
-variable | desc
---- | ---
-address_id | the id of the address
-address_owner | the id of the owner of the address
-address_type | the user/kitchen type of the owner
-address_line1 | the standard line 1 of an address
-address_line2 | the standard line 2 of an address
-address_city | the standard city of an address
-address_state | the standard state of an address
-address_zip | the standard zip code of an address
-address_phone | only if user: the phone number of the user
-address_created_date | the date and time the address was created
+**Kitchen**
+```json
+{
+  "status": 1,
+  "data": [
+    {
+      "address_id": "4",
+      "address_owner": "3",
+      "address_type": "kitchen",
+      "address_line1": "308 Negra Arroyo Lane",
+      "address_line2": "",
+      "address_city": "Albuquerque",
+      "address_state": "New Mexico",
+      "address_zip": "87104",
+      "address_phone": "",
+      "address_created_date": "2024-01-29 21:06:07"
+    }
+  ]
+}
+```
+**User**
+```json
+{
+  "status": 1,
+  "data": [
+    {
+      "address_id": "3",
+      "address_owner": "4",
+      "address_type": "user",
+      "address_line1": "308 Negra Arroyo Lane",
+      "address_line2": "",
+      "address_city": "Albuquerque",
+      "address_state": "New Mexico",
+      "address_zip": "87104",
+      "address_phone": "871-908-3981",
+      "address_created_date": "2024-01-29 21:06:07"
+    }
+  ]
+}
+```
 
 ## Delivery Methods
 ### POST delivery_methods/create
@@ -253,10 +361,17 @@ variable | datatype | desc
 kitchen_id | int | The id of the kitchen you want to get the delivery methods of
 
 Returns
-variable | desc
---- | ---
-kdm_id | the id of the delivery method
-kdm_owner | the id of the kitchen that owns the delivery method
-kdm_type | the type of the delivery method (local pickup / delivery)
-kdm_range | the mile range (0-255) for recommended service
-kdm_created_date | the date and time the delivery method was created
+```json
+{
+  "status": 1,
+  "data": [
+    {
+      "kdm_id": "4",
+      "kdm_owner": "5",
+      "kdm_type": "local_pickup",
+      "kdm_range": "15",
+      "kdm_created_date": "2024-01-30 13:56:46"
+    }
+  ]
+}
+```
