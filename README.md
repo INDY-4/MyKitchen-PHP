@@ -114,8 +114,16 @@ variable | datatype | desc
 address_owner | int | The id of the user or kitchen
 address_type | string (user / kitchen) | Tells if the address is for a user or kitchen
 address_line1 | string (100) | Address line 1
-address_line2 | string (100) | Address line 2
+address_line2 ? | string (100) | Address line 2
 address_city | string (50) | Address city
 address_state | string (30) | Can be 2 letter code (GA) or full state name (Georgia)
 address_zip | string (15) | Address zip code (30062)
 address_phone | string (30) | Only if user: Phone number of the user
+
+## Delivery Methods
+### POST delivery_methods/create
+variable | datatype | desc
+--- | --- | ---
+kdm_owner | int | The id of the kitchen who owns the delivery method
+kdm_type | string (local_pickup / delivery) | The options for the delivery type. Local pick-up means it is not a delivery.
+kdm_range | int (0-255) | The mile range to allow people to order. If they are further away, then discourage them.

@@ -9,3 +9,4 @@ include "./utils/functions.php";
 <a href="./tests/create_order.php"><p>Create Order</p></a>
 <a href="./tests/create_product.php"><p>Create Product</p></a>
 <a href="./tests/create_address.php"><p>Create Address</p></a>
+<a href="./tests/create_delivery_method.php"><p>Create Delivery Method</p></a>

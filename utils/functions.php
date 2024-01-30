@@ -53,6 +53,23 @@ function kitchen_exists($kitchen_id) {
     }
 }
 
+function doesKitchenAlreadyOwnMethod($kitchen_id) {
+    // Check the database if a user exists
+    global $conn;
+    $kitchen_id = $conn->real_escape_string($kitchen_id);
+
+    $sql = "SELECT COUNT(*) AS kitchen_exists FROM kitchen_delivery_methods WHERE kdm_owner = '$kitchen_id'";
+    $result = $conn->query($sql);
+
+    if ($result) {
+        $row = $result->fetch_assoc();
+        $kitchen_exists = $row['kitchen_exists'];
+        return $kitchen_exists;
+    } else {
+        return FALSE;
+    }
+}
+
 function doesUserAlreadyOwnKitchen($user_id) {
     // Check the database if a user exists
     global $conn;
