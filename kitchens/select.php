@@ -14,27 +14,24 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
 
 // If variable not present, set to null
 $kitchen_id = isset($_GET["id"]) ? $_GET["id"] : null;
-
-// Loop over variables to see which are null return the missing ones
-foreach (array('kitchen_id') as $variable) {
-    if (empty($$variable)) {
-        $response["missing"][] = $variable;
-    }
-}
-
-// Stop if not all variables entered
-if (isset($response["missing"])) {
-    outputJSON($response);
-    return;
-}
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 // Escape all variables to prevent SQL injection
-foreach (["kitchen_id"] as $variable) {
+foreach (["kitchen_id", "page"] as $variable) {
     $$variable = $conn->real_escape_string($$variable);
 }
 
+// Build SQL based on variables supplied
+$conditions = "";
+if (!empty($kitchen_id)) {
+    $conditions .= "WHERE kitchen_id = '$kitchen_id'";
+}
+
+// Show 25 kitchens per page and offset by the page number if sent
+$offset = ($page - 1) * 25;
+
 // Start doing database stuff
-$sql = "SELECT * FROM $table WHERE kitchen_id = '$kitchen_id'";
+$sql = "SELECT * FROM $table $conditions LIMIT 25 OFFSET $offset";
 $result = $conn->query($sql);
 
 // Stop if there was a sql error
