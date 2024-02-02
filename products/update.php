@@ -4,6 +4,7 @@ $table = "products";
 $response = [
     "status" => 0
 ];
+$imageRelativeDirectory = '../images/products/';
 
 // Stop if not POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -19,7 +20,7 @@ $product_desc = isset($_POST["product_desc"]) ? $_POST["product_desc"] : null;
 $product_price = isset($_POST["product_price"]) ? $_POST["product_price"] : null;
 $product_category = isset($_POST["product_category"]) ? $_POST["product_category"] : null;
 $product_tags = isset($_POST["product_tags"]) ? $_POST["product_tags"] : null;
-$product_image_url = isset($_POST["product_image_url"]) ? $_POST["product_image_url"] : null;
+$product_image = isset($_FILES["product_image"]) ? $_FILES["product_image"] : null;
 
 // Loop over variables to see which are null, return the missing ones
 foreach (array('product_id') as $variable) {
@@ -34,14 +35,11 @@ if (isset($response["missing"])) {
     return;
 }
 
-// Stop if order does not exist
-if (!order_exists($product_id)) {
-    outputJSON($response + ["error" => "order does not exist"]);
-    return;
-} 
+$finalProductImage = uploadImage($product_image, $imageRelativeDirectory);
+$oldImagePath = getProductImage($product_id);
 
 // Escape all variables to prevent SQL injection
-foreach (["product_id", "product_title", "product_desc", "product_price" ,"product_category", "product_tags", "product_image_url"] as $variable) {
+foreach (["product_id", "product_title", "product_desc", "product_price" ,"product_category", "product_tags", "finalProductImage"] as $variable) {
     $$variable = $conn->real_escape_string($$variable);
 }
 
@@ -68,8 +66,8 @@ if (!empty($product_tags)) {
     $product_tags = preg_replace("/[^a-zA-Z0-9,]/", "", $product_tags);
     $set .= (!empty($set) ? " , " : "") . "product_tags = '$product_tags'";
 }
-if (!empty($product_image_url)) {
-    $set .= (!empty($set) ? " , " : "") . "product_image_url = '$product_image_url'";
+if (!empty($finalProductImage)) {
+    $set .= (!empty($set) ? " , " : "") . "product_image_url = '$finalProductImage'";
 }
 
 // If this is still empty, nothing was updated
@@ -86,6 +84,7 @@ $sql = "UPDATE $table
 
 if ($conn->query($sql) === TRUE) {
     $response = ["status" => 1]; // success
+    deleteImage($oldImagePath);
 } else {
     $response = ["error" => $conn->error];
 }

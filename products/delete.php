@@ -4,6 +4,7 @@ $table = "products";
 $response = [
     "status" => 0
 ];
+$imagePath = "";
 
 // Stop if not POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -33,10 +34,14 @@ foreach (["product_id"] as $variable) {
     $$variable = $conn->real_escape_string($$variable);
 }
 
-$sql = "DELETE FROM $table WHERE product_id = '$product_id'";
+// Before deleting, we need to find the product to retrieve its image path
+$imagePath = getProductImage($product_id);
 
+// Now delete the product, and if it gets deleted, remove its image from disk
+$sql = "DELETE FROM $table WHERE product_id = '$product_id'";
 if ($conn->query($sql) === TRUE) {
     $response = ["status" => 1]; // success
+    deleteImage($imagePath);
 } else {
     $response = ["error" => $conn->error];
 }
