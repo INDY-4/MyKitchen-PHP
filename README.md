@@ -379,7 +379,7 @@ Stores the transactions for when a user buys something from a kitchen. Adding tr
 ### GET transactions/select
 variable | datatype | desc
 --- | --- | ---
-id ? | int | The id of the delivery_method you want the information of
+id ? | int | The id of the transaction you want the information of
 kitchen_id ? | int | The id of the kitchen you want to get the transactions of
 user_id ? | int | The id of the user you want to get the transactions of
 page ? | int | The page number of the results you want (default: 1), 25 transactions per page
