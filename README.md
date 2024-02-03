@@ -374,8 +374,19 @@ variable | datatype | desc
 --- | --- | ---
 id | int | The id of the delivery method you want to delete
 
+## Transactions
+Stores the transactions for when a user buys something from a kitchen. Adding transaction amounts up gives the profits a kitchen has.
+### GET transactions/select
+variable | datatype | desc
+--- | --- | ---
+id ? | int | The id of the delivery_method you want the information of
+kitchen_id ? | int | The id of the kitchen you want to get the transactions of
+user_id ? | int | The id of the user you want to get the transactions of
+page ? | int | The page number of the results you want (default: 1), 25 transactions per page
+
 ## Stripe Payments
 ### POST Stripe/ChargeCard
+This also adds a record to the Transactions table. You can read from this table in a user or kitchen profile to display how their net credit/debit.
 variable | datatype | desc
 --- | --- | ---
 kitchen_id | int | The id of the kitchen to receive payment
