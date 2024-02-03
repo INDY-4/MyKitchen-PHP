@@ -41,6 +41,13 @@ if (username_exists($user_name)) {
     return;
 }
 
+// Escape all variables to prevent SQL injection
+$user_pass = md5($user_pass);
+
+foreach (["user_name", "user_pass", "user_email"] as $variable) {
+    $$variable = $conn->real_escape_string($$variable);
+}
+
 // Can start doing things
 $sql = "INSERT INTO $table (user_name, user_pass, user_email) 
         VALUES ('$user_name', '$user_pass', '$user_email')";

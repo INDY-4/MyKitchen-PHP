@@ -14,11 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
 
 // If variable not present, set to null
 $order_id = isset($_GET["id"]) ? $_GET["id"] : null;
-$kitchen_id = isset($_GET["kitchen"]) ? $_GET["kitchen"] : null;
+$kitchen_id = isset($_GET["kitchen_id"]) ? $_GET["kitchen_id"] : null;
 $user_id = isset($_GET["user"]) ? $_GET["user"] : null;
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 // Escape all variables to prevent SQL injection
-foreach (["order_id", "kitchen_id", "user_id"] as $variable) {
+foreach (["order_id", "kitchen_id", "user_id", "page"] as $variable) {
     $$variable = $conn->real_escape_string($$variable);
 }
 
@@ -41,8 +42,12 @@ if (empty($conditions)) {
     outputJSON($response + ["error" => "no conditions provided"]);
     return;
 }
+
+// Show 25 orders per page and offset by the page number if sent
+$offset = ($page - 1) * 25;
+
 // Start doing database stuff
-$sql = "SELECT * FROM $table WHERE $conditions";
+$sql = "SELECT * FROM $table WHERE $conditions LIMIT 25 OFFSET $offset";
 $result = $conn->query($sql);
 
 // Stop if there was a sql error

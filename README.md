@@ -68,6 +68,7 @@ kitchen_uses_card | string (yes/no) | Simple yes or no for if the kitchen uses c
 variable | datatype | desc
 --- | --- | ---
 id | int | The id of the kitchen you want to get information on
+page ? | int | The page number of the results you want (default: 1), 25 kitchens per page
 
 Returns
 ```json
@@ -155,8 +156,9 @@ order_status | string (sent / payment_waiting / in_progress / cooked / done) | O
 variable | datatype | desc
 --- | --- | ---
 id ? | int | The id of the order you want to get information on
-kitchen ? | int | The id of the kitchen you want to get the orders of
+kitchen_id ? | int | The id of the kitchen you want to get the orders of
 user ? | int | The id of the user you want to get the orders of
+page ? | int | The page number of the results you want (default: 1), 25 orders per page
 
 Returns
 ```json
@@ -215,6 +217,7 @@ variable | datatype | desc
 --- | --- | ---
 id ? | int | The id of the product you want to get information on
 kitchen_id ? | int | The id of the kitchen you want the products of
+page ? | int | The page number of the results you want (default: 1), 25 products per page
 
 Returns
 ```json

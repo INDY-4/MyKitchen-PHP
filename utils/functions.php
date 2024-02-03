@@ -118,3 +118,48 @@ function outputJSON($input) {
     // Output $input as beautiful JSON
     echo(json_encode($input));
 }
+
+function uploadImage($image, $relativeDirectory) {
+    $finalImage = "";
+    if ($image != null && $image["error"] == 0) {
+        $fileName = basename($image['name']);
+        $imagePath = $relativeDirectory . $fileName;
+        $fileType = pathinfo($imagePath, PATHINFO_EXTENSION);
+    
+        // Check if the file is an image
+        $allowedTypes = array('jpg', 'jpeg', 'png');
+        if (!in_array($fileType, $allowedTypes)) {
+            outputJSON($response + ["error" => "image filetype not in [jpg, jpeg, png]"]);
+            return;
+        }
+        // Move the uploaded file to the specified directory
+        if (!move_uploaded_file($image['tmp_name'], $imagePath)) {
+            outputJSON($response + ["error" => "couldnt save image to disk"]);
+            return;
+        }
+        // If no errors, change finalProductImage to be the new location of the image
+        $finalImage = $imagePath;
+    }
+    return $finalImage;
+}
+
+function getProductImage($product_id) {
+    global $conn;
+    $sql = "SELECT product_image_url FROM products WHERE product_id = '$product_id'";
+    $result = $conn->query($sql);
+    if (!$result) {
+        outputJSON([
+            "status" => 0,
+            "error" => $conn->error
+        ]);
+        return;
+    }
+    $row = $result->fetch_assoc();
+    return $row['product_image_url'];
+}
+
+function deleteImage($path) {
+    if (file_exists($path)) {
+        unlink($path);
+    }
+}

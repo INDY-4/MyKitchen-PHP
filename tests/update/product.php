@@ -1,7 +1,7 @@
 <a href="../../"><p>Back</p></a>
 <hr>
 <h2>Update</h2>
-<form action="../../products/update.php" method="POST">
+<form action="../../products/update.php" method="POST" enctype="multipart/form-data">
     <label for="id">Product ID:</label>
     <input type="text" id="id" name="id" placeholder="3">
     <br>
@@ -26,8 +26,8 @@
     csv:<input type="text" id="product_tags" name="product_tags">
     <br>
     
-    <label for="product_image_url">Image URL:</label>
-    <input type="text" id="product_image_url" name="product_image_url">
+    <label for="product_image">Choose an image: (jpg, jpeg, png)</label>
+    <input type="file" id="product_image" name="product_image">
     <br>
 
     <input type="submit" value="Submit">
