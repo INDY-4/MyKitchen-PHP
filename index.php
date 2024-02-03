@@ -27,3 +27,6 @@ include "./utils/functions.php";
 <a href="./tests/delete/product.php"><p>Delete Product</p></a>
 <a href="./tests/delete/address.php"><p>Delete Address</p></a>
 <a href="./tests/delete/delivery_method.php"><p>Update Delivery Method</p></a>
+
+<h3>Payments</h3>
+<a href="./tests/payments/Send.php"><p>Charge Card</p></a>

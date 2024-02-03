@@ -7,8 +7,7 @@ $response = [
 
 // Stop if not POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    $response = ["error" => "request_method was not POST"]; 
-    outputJSON($response);
+    outputJSON($response + ["error" => "request_method was not POST"]);
     return;
 }
 
@@ -19,6 +18,7 @@ $kitchen_working_hours = isset($_POST["kitchen_working_hours"]) ? $_POST["kitche
 $kitchen_is_active = isset($_POST["kitchen_is_active"]) ? $_POST["kitchen_is_active"] : null;
 $kitchen_uses_cash = isset($_POST["kitchen_uses_cash"]) ? $_POST["kitchen_uses_cash"] : null;
 $kitchen_uses_card = isset($_POST["kitchen_uses_card"]) ? $_POST["kitchen_uses_card"] : null;
+$kitchen_stripe_id = isset($_POST["kitchen_stripe_id"]) ? $_POST["kitchen_stripe_id"] : null;
 
 // Loop over variables to see which are null, return the missing ones
 foreach (array('kitchen_id') as $variable) {
@@ -41,7 +41,7 @@ if (!kitchen_exists($kitchen_id)) {
 
 // Can start doing things
 // Escape all variables to prevent SQL injection
-foreach (["kitchen_id", "kitchen_name", "kitchen_working_hours", "kitchen_is_active" ,"kitchen_uses_cash", "kitchen_uses_card"] as $variable) {
+foreach (["kitchen_id", "kitchen_name", "kitchen_working_hours", "kitchen_is_active" ,"kitchen_uses_cash", "kitchen_uses_card", "kitchen_stripe_id"] as $variable) {
     $$variable = $conn->real_escape_string($$variable);
 }
 
@@ -65,13 +65,15 @@ if (!empty($kitchen_uses_card)) {
     $kitchen_uses_card = toBoolean($kitchen_uses_card);
     $set .= (!empty($set) ? " , " : "") . "kitchen_uses_card = '$kitchen_uses_card'";
 }
+if (!empty($kitchen_stripe_id)) {
+    $set .= (!empty($set) ? " , " : "") . "kitchen_stripe_id = '$kitchen_stripe_id'";
+}
 
 // If this is still empty, nothing was updated
 if ($set == "") {
     outputJSON($response + ["error" => "no updates provided"]);
     return;
 }
-
 
 $sql = "UPDATE $table 
         SET 

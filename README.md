@@ -136,6 +136,7 @@ kitchen_working_hours ? | json (100) | json object of the working hours for the 
 kitchen_is_active ? | string (yes/no) | Simple yes or no for if the kitchen is taking orders or deactivated
 kitchen_uses_cash ? | string (yes/no) | Simple yes or no for if the kitchen uses cash
 kitchen_uses_card ? | string (yes/no) | Simple yes or no for if the kitchen uses card
+kitchen_stripe_id ? | string (35) | Stripe Customer ID to be sent payments once handled by the system
 
 ### POST kitchens/delete
 variable | datatype | desc
@@ -372,3 +373,16 @@ kdm_range ? | int (0-255) | The mile range to allow people to order. If they are
 variable | datatype | desc
 --- | --- | ---
 id | int | The id of the delivery method you want to delete
+
+## Stripe Payments
+### POST Stripe/ChargeCard
+variable | datatype | desc
+--- | --- | ---
+kitchen_id | int | The id of the kitchen to receive payment
+user_id | int | The id of the user to be charged
+card_number | int | The card number for payment (XXXX-XXXX-XXXX-XXXX)
+card_name | str | The name on the card (JON DOE)
+card_exp_m | int | The expiration month (XX)
+card_exp_y | int | The expiration year (XXXX)
+card_cvc | int | The card CVC code (XXX)
+amount | float | The amount in dollars to charge
