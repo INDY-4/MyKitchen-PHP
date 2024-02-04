@@ -49,7 +49,9 @@ $kitchen_uses_card = toBoolean($kitchen_uses_card);
 
 // Escape all variables to prevent SQL injection
 foreach (["kitchen_owner_id", "kitchen_name", "kitchen_working_hours", "kitchen_uses_cash" ,"kitchen_uses_card"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 $sql = "INSERT INTO $table (kitchen_owner, kitchen_name, kitchen_working_hours, kitchen_uses_cash, kitchen_uses_card) 

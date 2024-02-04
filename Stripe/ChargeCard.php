@@ -52,7 +52,9 @@ $tr_stripe_id = $charge["id"];
 
 // Escape all variables to prevent SQL injection
 foreach (["kitchen_id", "user_id", "amount", "tr_status", "tr_stripe_id"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Can start doing things

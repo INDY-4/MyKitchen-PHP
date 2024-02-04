@@ -38,7 +38,9 @@ if (!order_exists($order_id)) {
 
 // Escape all variables to prevent SQL injection
 foreach (["order_id", "order_products", "order_total", "order_status"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Build SET string

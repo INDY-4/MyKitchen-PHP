@@ -39,7 +39,9 @@ $oldImagePath = getProductImage($product_id);
 
 // Escape all variables to prevent SQL injection
 foreach (["product_id", "product_title", "product_desc", "product_price" ,"product_category", "product_tags", "finalProductImage"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Build SET string

@@ -30,7 +30,9 @@ if (isset($response["missing"])) {
 
 // Escape all variables to prevent SQL injection
 foreach (["product_id"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Before deleting, we need to find the product to retrieve its image path

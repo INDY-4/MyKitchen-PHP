@@ -35,7 +35,9 @@ if (!kitchen_exists($kitchen_id)) {
 
 // Escape all variables to prevent SQL injection
 foreach (["kitchen_id"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Delete from all tables which reference this kitchen

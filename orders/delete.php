@@ -35,7 +35,9 @@ if (!order_exists($order_id)) {
 
 // Escape all variables to prevent SQL injection
 foreach (["order_id"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 $sql = "DELETE FROM $table WHERE order_id = '$order_id'";

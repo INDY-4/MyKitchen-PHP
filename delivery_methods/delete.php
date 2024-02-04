@@ -29,7 +29,9 @@ if (isset($response["missing"])) {
 
 // Escape all variables to prevent SQL injection
 foreach (["kdm_id"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 $sql = "DELETE FROM $table WHERE kdm_id = '$kdm_id'";

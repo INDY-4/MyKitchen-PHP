@@ -51,7 +51,9 @@ $finalProductImage = uploadImage($product_image, $imageRelativeDirectory);
 
 // Escape all variables to prevent SQL injection
 foreach (["product_kitchen_id", "product_title", "product_desc", "product_price" ,"product_category", "product_tags", "finalProductImage"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Can start doing things

@@ -56,7 +56,9 @@ if (doesKitchenAlreadyOwnMethod($kdm_owner)) {
 
 // Escape all variables to prevent SQL injection
 foreach (["kdm_owner", "kdm_type", "kdm_range"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Can start doing things

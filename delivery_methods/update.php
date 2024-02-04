@@ -31,7 +31,9 @@ if (isset($response["missing"])) {
 
 // Escape all variables to prevent SQL injection
 foreach (["kdm_id", "kdm_type", "kdm_range"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 $set = "";

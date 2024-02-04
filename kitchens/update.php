@@ -42,7 +42,9 @@ if (!kitchen_exists($kitchen_id)) {
 // Can start doing things
 // Escape all variables to prevent SQL injection
 foreach (["kitchen_id", "kitchen_name", "kitchen_working_hours", "kitchen_is_active" ,"kitchen_uses_cash", "kitchen_uses_card", "kitchen_stripe_id"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Build SET string

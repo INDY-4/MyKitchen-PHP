@@ -32,7 +32,9 @@ if (isset($response["missing"])) {
 
 // Escape all variables to prevent SQL injection
 foreach (["user_id", "user_pass", "user_email", "user_banner_url"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Build SET string

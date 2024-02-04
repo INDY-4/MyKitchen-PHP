@@ -35,7 +35,9 @@ if (isset($response["missing"])) {
 
 // Escape all variables to prevent SQL injection
 foreach (["address_id", "address_line1", "address_line2", "address_city" ,"address_state", "address_zip", "address_phone"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Build SET string

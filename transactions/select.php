@@ -19,7 +19,9 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 // Escape all variables to prevent SQL injection
 foreach (["tr_id", "tr_kitchen_id", "tr_user_id", "page"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Build SQL based on variables supplied
@@ -42,7 +44,7 @@ if (empty($conditions)) {
     return;
 }
 
-// Show 25 products per page and offset by the page number if sent
+// Show 25 transactions per page and offset by the page number if sent
 $offset = ($page - 1) * 25;
 
 // Start doing database stuff

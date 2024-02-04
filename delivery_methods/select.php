@@ -17,7 +17,9 @@ $kitchen_id = isset($_GET["kitchen_id"]) ? $_GET["kitchen_id"] : null;
 
 // Escape all variables to prevent SQL injection
 foreach (["kdm_id", "kitchen_id"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Build SQL based on variables supplied

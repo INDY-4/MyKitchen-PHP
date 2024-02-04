@@ -58,7 +58,9 @@ if ($order_total < 0) {
 
 // Escape all variables to prevent SQL injection
 foreach (["order_kitchen_id", "order_user_id", "order_products", "order_total" ,"order_status"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Can start doing things
