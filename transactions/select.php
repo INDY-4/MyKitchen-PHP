@@ -1,6 +1,6 @@
 <?php
 include "../utils/functions.php";
-$table = "orders";
+$table = "transactions";
 $response = [
     "status" => 0
 ];
@@ -12,28 +12,28 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
 }
 
 // If variable not present, set to null
-$order_id = isset($_GET["id"]) ? $_GET["id"] : null;
-$kitchen_id = isset($_GET["kitchen_id"]) ? $_GET["kitchen_id"] : null;
-$user_id = isset($_GET["user"]) ? $_GET["user"] : null;
+$tr_id = isset($_GET["id"]) ? $_GET["id"] : null;
+$tr_kitchen_id = isset($_GET["kitchen_id"]) ? intval($_GET["kitchen_id"]) : null;
+$tr_user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : null;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 // Escape all variables to prevent SQL injection
-foreach (["order_id", "kitchen_id", "user_id", "page"] as $variable) {
+foreach (["tr_id", "tr_kitchen_id", "tr_user_id", "page"] as $variable) {
     $$variable = $conn->real_escape_string($$variable);
 }
 
 // Build SQL based on variables supplied
 $conditions = "";
-if (!empty($order_id)) {
-    $conditions .= "order_id = '$order_id'";
+if (!empty($tr_id)) {
+    $conditions .= "tr_id = '$tr_id'";
 }
 
-if (!empty($kitchen_id)) {
-    $conditions .= (!empty($conditions) ? " AND " : "") . "order_kitchen_id = '$kitchen_id'";
+if (!empty($tr_kitchen_id)) {
+    $conditions .= (!empty($conditions) ? " AND " : "") . "tr_kitchen_id = '$tr_kitchen_id'";
 }
 
-if (!empty($user_id)) {
-    $conditions .= (!empty($conditions) ? " AND " : "") . "order_user_id = '$user_id'";
+if (!empty($tr_user_id)) {
+    $conditions .= (!empty($conditions) ? " AND " : "") . "tr_user_id = '$tr_user_id'";
 }
 
 // Stop if no variables supplied
@@ -42,7 +42,7 @@ if (empty($conditions)) {
     return;
 }
 
-// Show 25 orders per page and offset by the page number if sent
+// Show 25 products per page and offset by the page number if sent
 $offset = ($page - 1) * 25;
 
 // Start doing database stuff

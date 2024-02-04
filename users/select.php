@@ -7,8 +7,7 @@ $response = [
 
 // Stop if not GET
 if ($_SERVER["REQUEST_METHOD"] !== "GET") {
-    $response = ["error" => "request_method was not GET"]; 
-    outputJSON($response);
+    outputJSON($response + ["error" => "request_method was not GET"]);
     return;
 }
 

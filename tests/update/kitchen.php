@@ -35,5 +35,9 @@
     </select>
     <br>
 
+    <label for="kitchen_stripe_id">Stripe ID:</label>
+    <input type="text" id="kitchen_stripe_id" name="kitchen_stripe_id">
+    <br>
+
     <input type="submit" value="Submit">
 </form>

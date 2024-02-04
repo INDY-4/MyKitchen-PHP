@@ -8,8 +8,7 @@ $imagePath = "";
 
 // Stop if not POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    $response = ["error" => "request_method was not POST"]; 
-    outputJSON($response);
+    outputJSON($response + ["error" => "request_method was not POST"]);
     return;
 }
 
