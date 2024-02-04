@@ -1,6 +1,7 @@
 <?php 
 include "conn.php";
 $return = [];
+$api_url = "https://indy-api.zoty.us/";
 
 function user_exists($user_id) {
     // Check the database if a user exists
@@ -120,6 +121,8 @@ function outputJSON($input) {
 }
 
 function uploadImage($image, $relativeDirectory) {
+    global $api_url;
+
     $finalImage = "";
     if ($image != null && $image["error"] == 0) {
         $fileName = basename($image['name']);
@@ -140,7 +143,8 @@ function uploadImage($image, $relativeDirectory) {
         // If no errors, change finalProductImage to be the new location of the image
         $finalImage = $imagePath;
     }
-    return $finalImage;
+    
+    return $api_url . str_replace('../', '', $finalImage);
 }
 
 function getProductImage($product_id) {
@@ -159,7 +163,9 @@ function getProductImage($product_id) {
 }
 
 function deleteImage($path) {
-    if (file_exists($path)) {
-        unlink($path);
+    $urlParts = parse_url($path);
+    $relativePath = '../' . ltrim($urlParts['path'], '/');
+    if (file_exists($relativePath)) {
+        unlink($relativePath);
     }
 }
