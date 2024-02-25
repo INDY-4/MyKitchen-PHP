@@ -1,4 +1,7 @@
 <?php 
+header('Access-Control-Allow-Origin: http://localhost:3000');
+header('Content-Type: application/json');
+
 include "conn.php";
 $return = [];
 $api_url = "https://indy-api.zoty.us/";
@@ -120,13 +123,33 @@ function outputJSON($input) {
     echo(json_encode($input));
 }
 
+function getJSONPostData() {
+    $jsonData = file_get_contents('php://input');
+    return json_decode($jsonData, true);
+}
+
+// Function to generate a unique filename
+function generateUniqueFilename($uploadDir, $filename) {
+    $extension = pathinfo($filename, PATHINFO_EXTENSION);
+    do {
+        // Generate random 64-character string
+        $randomString = bin2hex(random_bytes(32));
+        // Append extension to the random string
+        $uniqueFilename = $randomString . '.' . $extension;
+        // Check if the file with this name already exists
+        $filePath = $uploadDir . $uniqueFilename;
+    } while (file_exists($filePath));
+    
+    return $filePath;
+}
+
 function uploadImage($image, $relativeDirectory) {
     global $api_url;
 
     $finalImage = "";
     if ($image != null && $image["error"] == 0) {
         $fileName = basename($image['name']);
-        $imagePath = $relativeDirectory . $fileName;
+        $imagePath = generateUniqueFilename($relativeDirectory, $fileName);
         $fileType = pathinfo($imagePath, PATHINFO_EXTENSION);
     
         // Check if the file is an image

@@ -11,8 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
+$data = getJSONPostData();
+
 // If variable not present, set to null
-$user_id = isset($_POST["id"]) ? $_POST["id"] : null;
+$user_id = isset($data["id"]) ? $data["id"] : null;
 
 // Loop over variables to see which are null, return the missing ones
 foreach (array('user_id') as $variable) {

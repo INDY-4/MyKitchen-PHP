@@ -11,10 +11,12 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
+$data = getJSONPostData();
+
 // If variable not present, set to null
-$user_name = isset($_POST["user_name"]) ? strtolower($_POST["user_name"]) : null;
-$user_pass = isset($_POST["user_pass"]) ? $_POST["user_pass"] : null;
-$user_email = isset($_POST["user_email"]) ? $_POST["user_email"] : null;
+$user_name = isset($data["user_name"]) ? strtolower($data["user_name"]) : null;
+$user_pass = isset($data["user_pass"]) ? $data["user_pass"] : null;
+$user_email = isset($data["user_email"]) ? $data["user_email"] : null;
 
 // Loop over variables to see which are null return the missing ones
 foreach (array('user_name', 'user_pass', 'user_email') as $variable) {

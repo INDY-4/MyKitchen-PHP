@@ -11,10 +11,12 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
+$data = getJSONPostData();
+
 // If variable not present, set to null
-$kdm_id = isset($_POST["id"]) ? $_POST["id"] : null;
-$kdm_type = isset($_POST["kdm_type"]) ? $_POST["kdm_type"] : null;
-$kdm_range = isset($_POST["kdm_range"]) ? $_POST["kdm_range"] : null;
+$kdm_id = isset($data["id"]) ? $data["id"] : null;
+$kdm_type = isset($data["kdm_type"]) ? $data["kdm_type"] : null;
+$kdm_range = isset($data["kdm_range"]) ? $data["kdm_range"] : null;
 
 // Loop over variables to see which are null, return the missing ones
 foreach (array('kdm_id') as $variable) {

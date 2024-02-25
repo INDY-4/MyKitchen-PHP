@@ -11,14 +11,16 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
+$data = getJSONPostData();
+
 // If variable not present, set to null
-$address_id = isset($_POST["id"]) ? $_POST["id"] : null;
-$address_line1 = isset($_POST["address_line1"]) ? $_POST["address_line1"] : null;
-$address_line2 = isset($_POST["address_line2"]) ? $_POST["address_line2"] : null;
-$address_city = isset($_POST["address_city"]) ? $_POST["address_city"] : null;
-$address_state = isset($_POST["address_state"]) ? $_POST["address_state"] : null;
-$address_zip = isset($_POST["address_zip"]) ? $_POST["address_zip"] : null;
-$address_phone = isset($_POST["address_phone"]) ? $_POST["address_phone"] : null;
+$address_id = isset($data["id"]) ? $data["id"] : null;
+$address_line1 = isset($data["address_line1"]) ? $data["address_line1"] : null;
+$address_line2 = isset($data["address_line2"]) ? $data["address_line2"] : null;
+$address_city = isset($data["address_city"]) ? $data["address_city"] : null;
+$address_state = isset($data["address_state"]) ? $data["address_state"] : null;
+$address_zip = isset($data["address_zip"]) ? $data["address_zip"] : null;
+$address_phone = isset($data["address_phone"]) ? $data["address_phone"] : null;
 
 // Loop over variables to see which are null, return the missing ones
 foreach (array('address_id') as $variable) {
