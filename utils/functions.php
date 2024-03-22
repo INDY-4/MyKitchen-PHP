@@ -1,6 +1,13 @@
+<<<<<<< Updated upstream
 <?php 
 header('Access-Control-Allow-Origin: http://localhost:3000');
 header('Content-Type: application/json');
+=======
+<?php
+header('Access-Control-Allow-Origin: *'); // Allow requests from any origin
+header('Content-Type: application/json');
+header('Cache-Control: no-cache');
+>>>>>>> Stashed changes
 
 include "conn.php";
 $return = [];
