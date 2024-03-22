@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
-$data = getJSONPostData();
+$data = $_POST;
 
 // If variable not present, set to null
 $address_owner = isset($data["address_owner"]) ? $data["address_owner"] : null;

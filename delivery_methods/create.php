@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
-$data = getJSONPostData();
+$data = $_POST;
 
 // If variable not present, set to null
 $kdm_owner = isset($data["kdm_owner"]) ? $data["kdm_owner"] : null;

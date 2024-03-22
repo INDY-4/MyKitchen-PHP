@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
-$data = getJSONPostData();
+$data = $_POST;
 
 // If variable not present, set to null
 $user_name = isset($data["user_name"]) ? strtolower($data["user_name"]) : null;

@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
-$data = getJSONPostData();
+$data = $_POST;
 
 // If variable not present, set to null
 $product_kitchen_id = isset($data["product_kitchen_id"]) ? $data["product_kitchen_id"] : null;

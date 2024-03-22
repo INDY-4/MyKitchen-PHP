@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
-$data = getJSONPostData();
+$data = $_POST;
 
 $kitchen_id = isset($data["kitchen_id"]) ? $data["kitchen_id"] : null;
 $user_id = isset($data["user_id"]) ? $data["user_id"] : null;

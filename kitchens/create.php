@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
-$data = getJSONPostData();
+$data = $_POST;
 
 // If variable not present, set to null
 $kitchen_owner_id = isset($data["kitchen_owner_id"]) ? $data["kitchen_owner_id"] : null;
