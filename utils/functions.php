@@ -41,6 +41,23 @@ function username_exists($username) {
     }
 }
 
+function email_exists($email) {
+    // Check the database if a user exists
+    global $conn;
+    $email_addr = $conn->real_escape_string($email);
+
+    $sql = "SELECT COUNT(*) AS email_exists FROM users WHERE user_email = '$email_addr'";
+    $result = $conn->query($sql);
+
+    if ($result) {
+        $row = $result->fetch_assoc();
+        $email_exists = $row['email_exists'];
+        return $email_exists;
+    } else {
+        return FALSE;
+    }
+}
+
 function kitchen_exists($kitchen_id) {
     // Check the database if a user exists
     global $conn;
@@ -109,6 +126,18 @@ function doesUserAlreadyOwnKitchen($user_id) {
     }
 }
 
+function generateRandomCode($length = 6) {
+    $characters = '0123456789';
+    $code = '';
+    $max = strlen($characters) - 1;
+
+    for ($i = 0; $i < $length; $i++) {
+        $code .= $characters[rand(0, $max)];
+    }
+
+    return $code;
+}
+
 function toBoolean($input) {
     // Convert "true/false" to 1/0 bit
     $lowercaseInput = strtolower($input);
@@ -124,12 +153,6 @@ function outputJSON($input) {
     echo(json_encode($input));
 }
 
-function getJSONPostData() {
-    $jsonData = file_get_contents('php://input');
-    return json_decode($jsonData, true);
-}
-
-// Function to generate a unique filename
 function generateUniqueFilename($uploadDir, $filename) {
     $extension = pathinfo($filename, PATHINFO_EXTENSION);
     do {
@@ -152,17 +175,23 @@ function uploadImage($image, $relativeDirectory) {
         $fileName = basename($image['name']);
         $imagePath = generateUniqueFilename($relativeDirectory, $fileName);
         $fileType = pathinfo($imagePath, PATHINFO_EXTENSION);
-    
+        
         // Check if the file is an image
-        $allowedTypes = array('jpg', 'jpeg', 'png');
+        $allowedTypes = ['jpg', 'jpeg', 'png'];
         if (!in_array($fileType, $allowedTypes)) {
-            outputJSON($response + ["error" => "image filetype not in [jpg, jpeg, png]"]);
-            return;
+            outputJSON([
+                "status" => 0,
+                "error" => "image filetype not in [jpg, jpeg, png]"
+            ]);
+            die;
         }
         // Move the uploaded file to the specified directory
         if (!move_uploaded_file($image['tmp_name'], $imagePath)) {
-            outputJSON($response + ["error" => "couldnt save image to disk"]);
-            return;
+            outputJSON([
+                "status" => 0,
+                "error" => "couldnt save image to disk"
+            ]);
+            die;
         }
         // If no errors, change finalProductImage to be the new location of the image
         $finalImage = $imagePath;
@@ -192,4 +221,80 @@ function deleteImage($path) {
     if (file_exists($relativePath)) {
         unlink($relativePath);
     }
+}
+
+function sendPasswordResetEmail($to, $code) {
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, 'https://api.mailgun.net/v3/sandboxcc593fb24aea4267acb9978ee420a2c6.mailgun.org/messages');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_USERPWD, 'api:' . '21e702760b68de124648e9cc7980cf0b-4c205c86-1ee94c5e');
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, [
+        'from' => 'Mailgun Sandbox <postmaster@sandboxcc593fb24aea4267acb9978ee420a2c6.mailgun.org>',
+        'to' => $to,
+        'subject' => "MyKitchen Password Reset",
+        'text' => "The code to reset your password is: $code"
+    ]);
+
+    $response = curl_exec($ch);
+    $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($http_status != 200) {
+        return 0;
+    }
+
+    return 1;
+}
+
+function recentPasswordRequest($email) {
+    global $conn;
+
+    $check_sql = "SELECT IF(pwr_created_date >= DATE_SUB(NOW(), INTERVAL 5 MINUTE), 'Within last 5 minutes', 'Not within last 5 minutes') 
+                  AS expiration_status FROM password_reset WHERE pwr_user_email = '$email' 
+                  ORDER BY pwr_created_date DESC LIMIT 1";
+    $result = $conn->query($check_sql);
+    
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        if ($row["expiration_status"] == "Within last 5 minutes") {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function passwordResetIsCorrect($email, $code) {
+    global $conn;
+
+    $check_sql = "SELECT IF(pwr_created_date >= DATE_SUB(NOW(), INTERVAL 5 MINUTE), 'Within last 5 minutes', 'Not within last 5 minutes') 
+                  AS expiration_status FROM password_reset WHERE pwr_user_email = '$email' AND pwr_code = '$code'
+                  ORDER BY pwr_created_date DESC LIMIT 1";
+    $result = $conn->query($check_sql);
+    
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        if ($row["expiration_status"] == "Within last 5 minutes") {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function deletePasswordResetByEmail($email) {
+    global $conn;
+
+    $delete_sql = "DELETE FROM password_reset WHERE pwr_user_email = '$email'";
+    
+    if ($conn->query($delete_sql) != TRUE) {
+        outputJSON(["status" => 0, "error" => $conn->error]);
+        die();
+    } 
+    
+    return true;
 }
