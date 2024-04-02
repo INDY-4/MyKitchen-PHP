@@ -11,14 +11,16 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
+$data = $_POST;
+
 // If variable not present, set to null
-$kitchen_id = isset($_POST["id"]) ? $_POST["id"] : null;
-$kitchen_name = isset($_POST["kitchen_name"]) ? $_POST["kitchen_name"] : null;
-$kitchen_working_hours = isset($_POST["kitchen_working_hours"]) ? $_POST["kitchen_working_hours"] : null;
-$kitchen_is_active = isset($_POST["kitchen_is_active"]) ? $_POST["kitchen_is_active"] : null;
-$kitchen_uses_cash = isset($_POST["kitchen_uses_cash"]) ? $_POST["kitchen_uses_cash"] : null;
-$kitchen_uses_card = isset($_POST["kitchen_uses_card"]) ? $_POST["kitchen_uses_card"] : null;
-$kitchen_stripe_id = isset($_POST["kitchen_stripe_id"]) ? $_POST["kitchen_stripe_id"] : null;
+$kitchen_id = isset($data["id"]) ? $data["id"] : null;
+$kitchen_name = isset($data["kitchen_name"]) ? $data["kitchen_name"] : null;
+$kitchen_working_hours = isset($data["kitchen_working_hours"]) ? $data["kitchen_working_hours"] : null;
+$kitchen_is_active = isset($data["kitchen_is_active"]) ? $data["kitchen_is_active"] : null;
+$kitchen_uses_cash = isset($data["kitchen_uses_cash"]) ? $data["kitchen_uses_cash"] : null;
+$kitchen_uses_card = isset($data["kitchen_uses_card"]) ? $data["kitchen_uses_card"] : null;
+$kitchen_stripe_id = isset($data["kitchen_stripe_id"]) ? $data["kitchen_stripe_id"] : null;
 
 // Loop over variables to see which are null, return the missing ones
 foreach (array('kitchen_id') as $variable) {
@@ -42,7 +44,9 @@ if (!kitchen_exists($kitchen_id)) {
 // Can start doing things
 // Escape all variables to prevent SQL injection
 foreach (["kitchen_id", "kitchen_name", "kitchen_working_hours", "kitchen_is_active" ,"kitchen_uses_cash", "kitchen_uses_card", "kitchen_stripe_id"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Build SET string

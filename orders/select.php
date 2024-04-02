@@ -19,7 +19,9 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 // Escape all variables to prevent SQL injection
 foreach (["order_id", "kitchen_id", "user_id", "page"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Build SQL based on variables supplied

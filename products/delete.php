@@ -12,8 +12,10 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
+$data = $_POST;
+
 // If variable not present, set to null
-$product_id = isset($_POST["id"]) ? $_POST["id"] : null;
+$product_id = isset($data["id"]) ? $data["id"] : null;
 
 // Loop over variables to see which are null, return the missing ones
 foreach (array('product_id') as $variable) {
@@ -30,7 +32,9 @@ if (isset($response["missing"])) {
 
 // Escape all variables to prevent SQL injection
 foreach (["product_id"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Before deleting, we need to find the product to retrieve its image path

@@ -18,7 +18,9 @@ $user_email = isset($_GET["email"]) ? $_GET["email"] : null;
 
 // Escape all variables to prevent SQL injection
 foreach (["user_id", "user_name", "user_email"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Build SQL based on variables supplied

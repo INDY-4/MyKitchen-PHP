@@ -11,11 +11,13 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
+$data = $_POST;
+
 // If variable not present, set to null
-$user_id = isset($_POST["id"]) ? $_POST["id"] : null;
-$user_pass = isset($_POST["user_pass"]) ? $_POST["user_pass"] : null;
-$user_email = isset($_POST["user_email"]) ? $_POST["user_email"] : null;
-$user_banner_url = isset($_POST["user_banner_url"]) ? $_POST["user_banner_url"] : null;
+$user_id = isset($data["id"]) ? $data["id"] : null;
+$user_pass = isset($data["user_pass"]) ? $data["user_pass"] : null;
+$user_email = isset($data["user_email"]) ? $data["user_email"] : null;
+$user_banner_url = isset($data["user_banner_url"]) ? $data["user_banner_url"] : null;
 
 // Loop over variables to see which are null, return the missing ones
 foreach (array('user_id') as $variable) {
@@ -32,7 +34,9 @@ if (isset($response["missing"])) {
 
 // Escape all variables to prevent SQL injection
 foreach (["user_id", "user_pass", "user_email", "user_banner_url"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Build SET string

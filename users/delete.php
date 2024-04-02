@@ -11,8 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
+$data = $_POST;
+
 // If variable not present, set to null
-$user_id = isset($_POST["id"]) ? $_POST["id"] : null;
+$user_id = isset($data["id"]) ? $data["id"] : null;
 
 // Loop over variables to see which are null, return the missing ones
 foreach (array('user_id') as $variable) {
@@ -29,7 +31,9 @@ if (isset($response["missing"])) {
 
 // Escape all variables to prevent SQL injection
 foreach (["user_id"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 $sql = "DELETE FROM $table WHERE user_id = '$user_id'";

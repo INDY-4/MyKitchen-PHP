@@ -11,12 +11,14 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
+$data = $_POST;
+
 // If variable not present, set to null
-$order_kitchen_id = isset($_POST["order_kitchen_id"]) ? $_POST["order_kitchen_id"] : null;
-$order_user_id = isset($_POST["order_user_id"]) ? $_POST["order_user_id"] : null;
-$order_products = isset($_POST["order_products"]) ? $_POST["order_products"] : null;
-$order_total = isset($_POST["order_total"]) ? $_POST["order_total"] : null;
-$order_status = isset($_POST["order_status"]) ? $_POST["order_status"] : null;
+$order_kitchen_id = isset($data["order_kitchen_id"]) ? $data["order_kitchen_id"] : null;
+$order_user_id = isset($data["order_user_id"]) ? $data["order_user_id"] : null;
+$order_products = isset($data["order_products"]) ? $data["order_products"] : null;
+$order_total = isset($data["order_total"]) ? $data["order_total"] : null;
+$order_status = isset($data["order_status"]) ? $data["order_status"] : null;
 
 // Loop over variables to see which are null return the missing ones
 foreach (array('order_kitchen_id', 'order_user_id', 'order_products', 'order_total', 'order_status') as $variable) {
@@ -58,7 +60,9 @@ if ($order_total < 0) {
 
 // Escape all variables to prevent SQL injection
 foreach (["order_kitchen_id", "order_user_id", "order_products", "order_total" ,"order_status"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Can start doing things

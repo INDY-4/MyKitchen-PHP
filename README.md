@@ -397,3 +397,22 @@ card_exp_m | int | The expiration month (XX)
 card_exp_y | int | The expiration year (XXXX)
 card_cvc | int | The card CVC code (XXX)
 amount | float | The amount in dollars to charge
+
+## Password Reset
+Send a password change request to a given user's email address. The user will need to use the code from their email to verify.
+### POST password_reset/request
+This requests a password reset on the target email. If the email exists in the users database, they will be emailed with a 6 digit code.
+The password change request will be active for 5 minutes, if they do not reset their password in that time they will need to request again.
+variable | datatype | desc
+--- | --- | ---
+user_email | string | The id of the kitchen to receive payment
+
+### POST password_reset/change
+This changes the password of a user if their reset code was correct.
+The password change request will be active for 5 minutes, if they do not reset their password in that time they will need to request again.
+The password needs to be md5'd or else once the user's password is changed, the user will not be able to log in.
+variable | datatype | desc
+--- | --- | ---
+user_email | string | The id of the kitchen to receive payment
+reset_code | int | The 6-digit code the user received in their email
+password | string (32, md5) | The md5'd password the user will be changed to.

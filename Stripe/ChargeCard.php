@@ -12,14 +12,16 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
-$kitchen_id = isset($_POST["kitchen_id"]) ? $_POST["kitchen_id"] : null;
-$user_id = isset($_POST["user_id"]) ? $_POST["user_id"] : null;
-$card_number = isset($_POST["card_number"]) ? $_POST["card_number"] : null;
-$card_name = isset($_POST["card_name"]) ? $_POST["card_name"] : null;
-$card_exp_m = isset($_POST["card_exp_m"]) ? intval($_POST["card_exp_m"]) : null;
-$card_exp_y = isset($_POST["card_exp_y"]) ? intval($_POST["card_exp_y"]) : null;
-$card_cvc = isset($_POST["card_cvc"]) ? intval($_POST["card_cvc"]) : null;
-$amount = isset($_POST["amount"]) ? $_POST["amount"] : null;
+$data = $_POST;
+
+$kitchen_id = isset($data["kitchen_id"]) ? $data["kitchen_id"] : null;
+$user_id = isset($data["user_id"]) ? $data["user_id"] : null;
+$card_number = isset($data["card_number"]) ? $data["card_number"] : null;
+$card_name = isset($data["card_name"]) ? $data["card_name"] : null;
+$card_exp_m = isset($data["card_exp_m"]) ? intval($data["card_exp_m"]) : null;
+$card_exp_y = isset($data["card_exp_y"]) ? intval($data["card_exp_y"]) : null;
+$card_cvc = isset($data["card_cvc"]) ? intval($data["card_cvc"]) : null;
+$amount = isset($data["amount"]) ? $data["amount"] : null;
 
 // Loop over variables to see which are null, return the missing ones
 foreach (array('kitchen_id', 'user_id', 'card_number', 'amount') as $variable) {
@@ -52,7 +54,9 @@ $tr_stripe_id = $charge["id"];
 
 // Escape all variables to prevent SQL injection
 foreach (["kitchen_id", "user_id", "amount", "tr_status", "tr_stripe_id"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Can start doing things

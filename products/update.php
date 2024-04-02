@@ -12,13 +12,15 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
+$data = $_POST;
+
 // If variable not present, set to null
-$product_id = isset($_POST["id"]) ? $_POST["id"] : null;
-$product_title = isset($_POST["product_title"]) ? $_POST["product_title"] : null;
-$product_desc = isset($_POST["product_desc"]) ? $_POST["product_desc"] : null;
-$product_price = isset($_POST["product_price"]) ? $_POST["product_price"] : null;
-$product_category = isset($_POST["product_category"]) ? $_POST["product_category"] : null;
-$product_tags = isset($_POST["product_tags"]) ? $_POST["product_tags"] : null;
+$product_id = isset($data["id"]) ? $data["id"] : null;
+$product_title = isset($data["product_title"]) ? $data["product_title"] : null;
+$product_desc = isset($data["product_desc"]) ? $data["product_desc"] : null;
+$product_price = isset($data["product_price"]) ? $data["product_price"] : null;
+$product_category = isset($data["product_category"]) ? $data["product_category"] : null;
+$product_tags = isset($data["product_tags"]) ? $data["product_tags"] : null;
 $product_image = isset($_FILES["product_image"]) ? $_FILES["product_image"] : null;
 
 // Loop over variables to see which are null, return the missing ones
@@ -39,7 +41,9 @@ $oldImagePath = getProductImage($product_id);
 
 // Escape all variables to prevent SQL injection
 foreach (["product_id", "product_title", "product_desc", "product_price" ,"product_category", "product_tags", "finalProductImage"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Build SET string

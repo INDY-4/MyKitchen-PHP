@@ -11,11 +11,13 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
+$data = $_POST;
+
 // If variable not present, set to null
-$order_id = isset($_POST["id"]) ? $_POST["id"] : null;
-$order_products = isset($_POST["order_products"]) ? $_POST["order_products"] : null;
-$order_total = isset($_POST["order_total"]) ? $_POST["order_total"] : null;
-$order_status = isset($_POST["order_status"]) ? $_POST["order_status"] : null;
+$order_id = isset($data["id"]) ? $data["id"] : null;
+$order_products = isset($data["order_products"]) ? $data["order_products"] : null;
+$order_total = isset($data["order_total"]) ? $data["order_total"] : null;
+$order_status = isset($data["order_status"]) ? $data["order_status"] : null;
 
 // Loop over variables to see which are null, return the missing ones
 foreach (array('order_id') as $variable) {
@@ -38,7 +40,9 @@ if (!order_exists($order_id)) {
 
 // Escape all variables to prevent SQL injection
 foreach (["order_id", "order_products", "order_total", "order_status"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Build SET string

@@ -11,10 +11,12 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     return;
 }
 
+$data = $_POST;
+
 // If variable not present, set to null
-$kdm_owner = isset($_POST["kdm_owner"]) ? $_POST["kdm_owner"] : null;
-$kdm_type = isset($_POST["kdm_type"]) ? $_POST["kdm_type"] : null;
-$kdm_range = isset($_POST["kdm_range"]) ? $_POST["kdm_range"] : null;
+$kdm_owner = isset($data["kdm_owner"]) ? $data["kdm_owner"] : null;
+$kdm_type = isset($data["kdm_type"]) ? $data["kdm_type"] : null;
+$kdm_range = isset($data["kdm_range"]) ? $data["kdm_range"] : null;
 
 // Loop over variables to see which are null return the missing ones
 foreach (array('kdm_owner', 'kdm_type', 'kdm_range') as $variable) {
@@ -56,7 +58,9 @@ if (doesKitchenAlreadyOwnMethod($kdm_owner)) {
 
 // Escape all variables to prevent SQL injection
 foreach (["kdm_owner", "kdm_type", "kdm_range"] as $variable) {
-    $$variable = $conn->real_escape_string($$variable);
+    if ($$variable !== null) {
+        $$variable = $conn->real_escape_string($$variable);
+    }
 }
 
 // Can start doing things
