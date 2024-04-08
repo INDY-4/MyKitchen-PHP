@@ -226,26 +226,52 @@ function deleteImage($path) {
 function sendPasswordResetEmail($to, $code) {
     $ch = curl_init();
 
-    curl_setopt($ch, CURLOPT_URL, 'https://api.mailgun.net/v3/sandboxcc593fb24aea4267acb9978ee420a2c6.mailgun.org/messages');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_USERPWD, 'api:' . '21e702760b68de124648e9cc7980cf0b-4c205c86-1ee94c5e');
-    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+    $email_data = [
+        'personalizations' => [
+            [
+                'to' => [
+                    [
+                        'email' => $to
+                    ]
+                ],
+                'subject' => 'MyKitchen: Password Reset Code'
+            ]
+        ],
+        'from' => [
+            'email' => 'noreply@indy-mail.zoty.us'
+        ],
+        'content' => [
+            [
+                'type' => 'text/plain',
+                'value' => 'The code to reset your password is: ' . $code
+            ]
+        ]
+    ];
+
+    // Encode the email data as JSON
+    $email_json = json_encode($email_data);
+
+    // Set cURL options
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $email_json);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, [
-        'from' => 'Mailgun Sandbox <postmaster@sandboxcc593fb24aea4267acb9978ee420a2c6.mailgun.org>',
-        'to' => $to,
-        'subject' => "MyKitchen Password Reset",
-        'text' => "The code to reset your password is: $code"
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Authorization: Bearer API_KEY_HERE',
+        'Content-Type: application/json'
     ]);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
+    // Execute cURL request
     $response = curl_exec($ch);
-    $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
 
-    if ($http_status != 200) {
-        return 0;
+    // Check for errors
+    if (curl_errno($ch)) {
+        outputJSON(["status" => 0, "error" => curl_error($ch)]);
+        die();
     }
+    curl_close($ch);
 
     return 1;
 }
