@@ -324,3 +324,37 @@ function deletePasswordResetByEmail($email) {
     
     return true;
 }
+
+function validateHMAC($requestData) {
+    if (validateRequest($requestData)) {
+        return true;
+    }
+    http_response_code(403);
+    outputJSON(["status" => 0, "error" => "HMAC is incorrect"]);
+    die();
+}
+
+function generateHMAC($data, $key) {
+    return hash_hmac('sha256', $data, $key);
+}
+
+function validateRequest($requestData) {
+    $secret = 'mykitchen_api';
+    $timestamp = $requestData['timestamp'];
+    $receivedHMAC = $requestData['hmac'];
+    unset($requestData['timestamp'], $requestData['hmac']); // Remove timestamp and hmac from data
+    $data = http_build_query($requestData, '', '&');
+
+    $currentTime = time();
+    $requestTime = intval($timestamp);
+    $timeDifference = $currentTime - $requestTime;
+
+    // Allow for a small negative time difference (up to 15 seconds) to account for potential delays
+    if ($timeDifference > 0 || $timeDifference < -15) {
+        return false; // Request received more than 15 seconds after it was sent or in the future
+    }
+
+    $calculatedHMAC = generateHMAC($timestamp . $data, $secret);
+
+    return hash_equals($calculatedHMAC, $receivedHMAC);
+}

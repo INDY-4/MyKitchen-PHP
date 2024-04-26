@@ -211,7 +211,7 @@ product_desc ? | string (1000) | Description of the product
 product_price | float | Price of the product, number only
 product_category ? | string (100) | The category the product belongs in
 product_tags ? | string (500, csv) | The tags associated with the product, comma separated a-Z0-9
-product_image_url ? | string (255) | The url to an image for the product (unsplash)
+product_image ? | string (255) | The actual image to upload for the product (use media upload input)
 
 ### GET products/select
 variable | datatype | desc
@@ -233,7 +233,7 @@ Returns
       "product_price": "6.9",
       "product_category": "Handhelds",
       "product_tags": "pastrami,burger,cheese",
-      "product_image_url": "https://images.unsplash.com/photo-1697384874178-3f2afa6bed7b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "product_image_url": "https://indy-api.zoty.us/images/products/16973848741783f2afa6bed7b.jpg",
       "product_created_date": "2024-01-29 12:17:57"
     }
   ]
@@ -249,7 +249,7 @@ product_desc ? | string (1000) | Description of the product
 product_price ? | float | Price of the product, number only
 product_category ? | string (100) | The category the product belongs in
 product_tags ? | string (500, csv) | The tags associated with the product, comma separated a-Z0-9
-product_image_url ? | string (255) | The url to an image for the product (unsplash)
+product_image ? | string (255) | The new uploaded image for the product (unsplash)
 
 ### POST products/delete
 variable | datatype | desc

@@ -62,4 +62,3 @@ $response = [
 
 $conn->close();
 outputJSON($response);
-?>
