@@ -1,8 +1,3 @@
-<?php
-include "./utils/functions.php";
-?>
-
-<hr>
 <h2>Tests</h2>
 <h3>Create</h3>
 <a href="./tests/create/user.php"><p>Create User</p></a>

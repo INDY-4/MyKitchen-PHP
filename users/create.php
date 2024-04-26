@@ -44,8 +44,6 @@ if (username_exists($user_name)) {
 }
 
 // Escape all variables to prevent SQL injection
-$user_pass = md5($user_pass);
-
 foreach (["user_name", "user_pass", "user_email"] as $variable) {
     if ($$variable !== null) {
         $$variable = $conn->real_escape_string($$variable);
